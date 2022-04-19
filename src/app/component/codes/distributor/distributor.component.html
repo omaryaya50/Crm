@@ -1,0 +1,110 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container mb-5">
+  <div class="form-row" class="tool">
+
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Code' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Distributors' | translate }}
+    </a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="form-row">
+    &nbsp;&nbsp;&nbsp;
+    <button [hidden]="!_IPrgPer.insert"  type="button" id="btnoption" class="btn btn-success btn-sm" (click)="Addnewrecord(template)">
+      <i class="fas fa-plus"></i> {{'AddNewRecord' | translate }}
+    </button>
+    &nbsp;&nbsp;
+    <button [hidden]="!_IPrgPer.edit"  type="button" id="btnoption" class="btn btn-info btn-sm" (click)="UpdateRecord(template)">
+      <i class="fas fa-edit"></i> {{'Update' | translate }}
+    </button>
+
+  </div>
+  <hr>
+
+  <ng-template #template>
+    <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 [dir]="Rtl==true?'RTL':'LTR'" class="modal-title" id="exampleModalLongTitle">{{title | translate}}</h6>
+            <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #Distributor="ngForm" (ngSubmit)="onSubmit(Distributor)">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label [style.float]="Rtl? 'right':'left'" for="distributorName"><span
+                      [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                      {{'Distributor Name' | translate}}</span> </label>
+                  <input #distributorName="ngModel" type="text" name="distributorName"
+                    [(ngModel)]="DistributorServ.Distributor.distributorName" class="form-control input-sm"
+                    id="distributorName" placeholder="{{'Name' | translate}}" required>
+                  <div class="text-danger"
+                    *ngIf="isSubmitted && distributorName.invalid && distributorName.errors?.required ">
+                    <small>{{'required' | translate}}</small>
+                  </div>
+
+                </div>
+                <div class="form-group col-md-6">
+                  <label [style.float]="Rtl? 'right':'left'" for="distributorLatName">
+                    <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                      {{'Distributor LatName' | translate}}</span>
+                  </label>
+                  <input #distributorLatName="ngModel" type="text" class="form-control input-sm"
+                    name="distributorLatName" id="distributorLatName"
+                    [(ngModel)]="DistributorServ.Distributor.distributorLatName" placeholder="{{'LatName' | translate}}"
+                    required>
+                  <div class="text-danger"
+                    *ngIf="isSubmitted && distributorLatName.invalid && distributorLatName.errors?.required ">
+                    <small>{{'required' | translate}}</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col text-center">
+                  <button [hidden]="!_IPrgPer.insert"  class="btn btn-success btn-sm mx-auto" data-style="zoom-in">
+                    <i class="fas fa-save"></i>
+                    {{'Save' | translate}}
+                  </button>
+
+                  <button type="button" class="btn btn-dark btn-sm mx-3" (click)="reset()">
+                    <i class="fas fa-undo"></i>
+                    {{'Reset' | translate}}
+                </button>
+
+                <button [hidden]="!_IPrgPer.edit"  type="button" class="btn btn-danger btn-sm"
+                  *ngIf="DistributorServ.Distributor.distributorCode>0"
+                  (click)="Delete(DistributorServ.Distributor.distributorCode)">
+                  <i class="fas fa-trash-alt"></i>
+                  {{'Delete' | translate}}
+                </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+
+  <div class="form-row">
+    <ag-grid-angular #agGrid style="width: 100%; height: 450px;" class="ag-theme-alpine" [rowData]="rowData | async"
+      [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+      [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"
+      pagination>
+    </ag-grid-angular>
+  </div>
+</div>

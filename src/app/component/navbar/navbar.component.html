@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand">
+      <img src="./assets/images/amal--logo.png" class="logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div style=" float: inline-start; margin-inline-start: 350px; "
+      class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarNav">
+
+      <ul style=" float: inline-start; margin-inline-start: 350px; " class="nav navbar-nav ml-auto messages"
+        ngbDropdownMenu>
+
+        <li class="nav-item active" *ngIf=this.Admin>
+          <div class="btn-group">
+            <button type="button" class="btn btn-dark dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="fas fa-bell"></i>
+              <span style="margin: 5px;color: #FF0000;">{{WaitingListLength}}</span>
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-right  force-scroll ">
+
+              <a class="dropdown-item" *ngIf="Empty">
+                {{EmptyString | translate}}
+              </a>
+              <a style="text-align: center;" class="dropdown-item" *ngFor="let wait of WaitingList"
+                (click)="move(wait.customerId)">
+                {{wait.customerName | translate}} {{wait.StatusString | translate}} {{wait.SalesName | translate}}
+              </a>
+
+            </div>
+
+          </div>
+        </li>
+
+        <li class="nav-item active">
+          <div class="btn-group">
+            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <span class="fas fa-user"></span> {{username}}
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a style="text-align: center;" (click)="onLoggedout()" [routerLink]="['/login']" class="dropdown-item">
+                <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item active">
+          <div class="btn-group">
+            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="fas fa-globe-asia"></i> {{'Lang' | translate}}
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <button style="text-align: center;" type="button" class="dropdown-item" (click)="changlan('rtl','fa')">
+                {{'Aribic' | translate}}
+              </button>
+              <button style="text-align: center;" type="button" class="dropdown-item" (click)="changlan('ltr','en')">
+                {{'English' | translate}}
+              </button>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+</nav>

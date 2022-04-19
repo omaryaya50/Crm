@@ -1,0 +1,197 @@
+<ngx-spinner></ngx-spinner>
+
+
+<div class="container mb-5">
+<div class="form-row" class="tool">
+  <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+      class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+  <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Code' | translate }}/</span>
+  <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+    <span class="fas fa-sync fa-spin"></span> {{'Territory' | translate }}
+  </a>
+</div>
+</div>
+
+<div class="container">
+
+<ng-template [ngIf]="enterymode==1">
+  <form #Territory="ngForm" (ngSubmit)="onSubmit(Territory)">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="territoryName"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Territory Name' | translate}}</span> </label>
+
+        <input #territoryName="ngModel" type="text" name="territoryName"
+          [(ngModel)]="obserTerritory.obIterritory.territoryName" class="form-control input-sm" id="territoryName"
+          placeholder="{{'Name' | translate}}" required>
+        <div class="text-danger" *ngIf="isSubmitted && territoryName.invalid && territoryName.errors?.required ">
+          <small>{{'required' | translate}}</small>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="territoryLatName"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">{{'Territory LatName' | translate}}</span>
+        </label>
+        <input #territoryLatName="ngModel" type="text" data-dismiss="modal" class="form-control input-sm"
+          name="territoryLatName" id="territoryLatName" [(ngModel)]="obserTerritory.obIterritory.territoryLatName"
+          placeholder="{{'LatName' | translate}}" required>
+        <div class="text-danger" *ngIf="isSubmitted && territoryLatName.invalid && territoryLatName.errors?.required ">
+          <small>{{'required' | translate}}</small>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <div class="form-row">
+
+      <div class="container">
+        <div class=" mb-4">
+          <button [hidden]="!_IPrgPer.insert" type="button" class="btn btn-outline-success btn-sm" (click)="insertFooterRow(template)">
+            {{'AddnewRow' | translate}}
+          </button>
+
+          <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-outline-info btn-sm mx-2"
+            (click)="UpdateFooterRow(template)">
+            <i class="fas fa-edit"></i>
+            <small>{{'Updaterow' | translate }}</small>
+          </button>
+
+          <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-outline-danger btn-sm" (click)="deleteSelectedRows()">
+            <small> {{'deleteRow' | translate}}</small>
+          </button>
+        </div>
+      </div>
+
+      <ng-template #template>
+        <div class="container">
+
+          <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title" id="exampleModalLongTitle">{{title| translate}}</h6>
+                  <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form #Sector="ngForm" (ngSubmit)="onSubmitSector(Sector)">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label [style.float]="Rtl? 'right':'left'" for="sectorName"><span
+                            [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                            {{'Sector Name' | translate}}</span> </label>
+                        <input #sectorName="ngModel" type="text" name="sectorName"
+                          [(ngModel)]="obserSectorService.oboneSector.sectorName" class="form-control input-sm"
+                          id="sectorName" placeholder="{{'Name' | translate}}" required>
+                        <div class="text-danger"
+                          *ngIf="isSubmitted && sectorName.invalid && sectorName.errors?.required ">
+                          <small>{{'required' | translate}}</small>
+                        </div>
+                        <input #sectorId="ngModel" type="text" name="sectorId"
+                          [(ngModel)]="obserSectorService.oboneSector.sectorId" class="form-control input-sm"
+                          id="sectorId" placeholder="sectorId">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label [style.float]="Rtl? 'right':'left'" for="sectorLatName">
+                          <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                            {{'Sector LatName' | translate}}</span>
+                        </label>
+                        <input #sectorLatName="ngModel" type="text" class="form-control input-sm" name="sectorLatName"
+                          id="sectorLatName" [(ngModel)]="obserSectorService.oboneSector.sectorLatName"
+                          placeholder="{{'LatName' | translate}}" required>
+                        <div class="text-danger"
+                          *ngIf="isSubmitted && sectorLatName.invalid && sectorLatName.errors?.required ">
+                          <small>{{'required' | translate}}</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="col text-center">
+                        <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+                          <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                          &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                        </button>
+
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <br>
+
+      <ag-grid-angular #agGridinsert style="width: 100%; height: 250px;" class="ag-theme-alpine"
+        [rowData]="rowDatainsert | async" [columnDefs]="columnDefsinsert" [enableRtl]="Rtl"
+        (gridReady)="onGridReadyinsert($event)" animateRows [rowSelection]="rowSelection"
+        (selectionChanged)="onSelectionChangedinsert($event)">
+      </ag-grid-angular>
+
+    </div>
+    <br>
+    <div class="container">
+
+      <div class="row">
+        <div class="col text-center">
+          <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm px-3" data-style="zoom-in">
+            <span class="fas fa-save"></span>
+            {{'Save' | translate}}
+          </button>
+
+          <button type="button" class="btn btn-danger btn-sm mx-2" (click)="CancelSave()">
+            <span class="fas fa-undo"></span>
+            {{'Cancel' | translate}}
+          </button>
+
+
+          <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-danger btn-sm" *ngIf="obserTerritory.obIterritory.territoryId>0"
+            (click)="DeleteCurrentRecord( obserTerritory.obIterritory.territoryId)">
+            <span class="fas fa-trash-alt"></span>
+            {{'Delete' | translate}}
+          </button>
+
+        </div>
+      </div>
+      <br>
+    </div>
+
+
+  </form>
+</ng-template>
+
+<ng-template [ngIf]="enterymode==0">
+  <div class="form-row">
+    <button [hidden]="!_IPrgPer.insert" type="button" id="btnoption" class="btn btn-success btn-sm" (click)="PostRecordArea()">
+
+      <i class="fas fa-plus"></i>
+      {{'AddNewRecord' | translate }}
+
+    </button>
+
+    <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-info btn-sm update" (click)="PutRecordArea()">
+
+      <i class="fas fa-edit"></i>
+
+      {{'Update' | translate }}
+
+    </button>
+
+  </div>
+
+  <hr>
+  <div class="form-row">
+    <ag-grid-angular #agGrid style="width: 100%; height: 450px;" class="ag-theme-alpine" [rowData]="rowData | async"
+      [columnDefs]="columnDefs" [enableRtl]="Rtl" animateRows [rowSelection]="rowSelection"
+      (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)" pagination>
+    </ag-grid-angular>
+  </div>
+  <br><br>
+</ng-template>
+</div>

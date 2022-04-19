@@ -1,0 +1,42 @@
+<!-- <div dir="{{textDir}}" *ngIf="!isLogin">
+  <app-navbar></app-navbar>
+</div> -->
+<!-- <div dir="{{textDir}}" *ngIf="!isLogin">
+  <app-cart></app-cart>
+</div> -->
+<!-- <div dir="{{textDir}}" class="{{textDir}} ">
+  <section [ngClass]="{ collapsed: collapedSideBar }" class="main-container " [style.margin-left]="getleft()"
+    [style.border]="getborder()">
+    <router-outlet></router-outlet>
+  </section>
+</div> -->
+
+
+
+<div class="row">
+
+  <div class="col-md-12" style="padding: 0;">
+    <div dir="{{textDir}}" *ngIf="!isLogin">
+      <app-navbar></app-navbar>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+
+    <div dir="{{textDir}}" *ngIf="!isLogin">
+      <app-cart></app-cart>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+    <div dir="{{textDir}}" class="{{textDir}} ">
+
+      <section [ngClass]="{ collapsed: collapedSideBar }" class="main-container " [style.margin-left]="getleft()"
+        [style.border]="getborder()">
+        <router-outlet></router-outlet>
+
+      </section>
+    </div>
+  </div>
+
+</div>

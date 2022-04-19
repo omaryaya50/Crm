@@ -1,0 +1,117 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container">
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Reports' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Customer Sales Field Report' | translate }}
+    </a>
+  </div>
+</div>
+
+
+<br>
+<div class="container">
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="salesFieldId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Sales Field' | translate}}</span> </label>
+      <select #salesFieldId="ngModel" class="custom-select" [(ngModel)]="CustID" name="salesFieldId" id="salesFieldId"
+        (ngModelChange)="onChangeSelectionCustomerClass($event)">
+        <option value="0">
+        
+        </option>
+        <option *ngFor="let xsector of CustClass" value={{xsector.salesFieldId}}>
+          {{xsector.salesFieldName}}
+
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-md-6 ">
+      <label [style.float]="Rtl? 'right':'left'" for="ReportName"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Report Name' | translate}}</span>
+      </label>
+      <input type="text" [(ngModel)]="ReportName" class="form-control" placeholder="{{'Report Name' | translate}}">
+    </div>
+  </div>
+</div>
+<!--.container-->
+
+<div style="justify-content: center; align-items: center; display: flex; margin-top: 1.5em;">
+  &nbsp;&nbsp;
+  <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption" class="btn btn-outline-info"
+    (click)="Filter()">
+    <i class="fa fa-eye" aria-hidden="true"></i> {{'Show Data' | translate }}
+  </button>
+  &nbsp;&nbsp;
+
+</div>
+<div class="container my-5">
+  <hr>
+</div>
+
+<div class="container">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <fieldset [dir]="Rtl? 'right':'left'">
+        <legend class="text-success">{{'Sales Fields' | translate}}</legend>
+      </fieldset>
+    </div>
+    <div class="form-group col-md-6">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+        class="btn btn-outline-success" (click)="ExportExcel(FilteredList)">
+        <i class="fa fa-arrow-down"></i>
+        {{'Export Sales Fields To Excel' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--container-->
+
+<div class="container">
+  <div class="form-row">
+    <ag-grid-angular #agGrid style="width: 100%; height: 550px;" class="ag-theme-alpine" 
+    [rowData]="rowData | async"
+      [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" 
+      animateRows [rowSelection]="rowSelection"
+      [suppressMenu]=true 
+      (gridReady)="onGridReady($event)" pagination>
+    </ag-grid-angular>
+  </div>
+</div>
+
+<div class="my-5 container">
+  <hr>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <fieldset [dir]="Rtl? 'right':'left'">
+      <legend class="text-success">{{'Total' | translate}}</legend>
+    </fieldset>
+  </div>
+  <div class="form-group col-md-6">
+    <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+      class="btn btn-outline-success" (click)="ExportExcel(Total)">
+
+      <i class="fa fa-arrow-down"></i>
+      {{'Export Total To Excel' | translate }}
+
+    </button>
+
+  </div>
+</div>
+
+<div class="form-row">
+  <ag-grid-angular #agGrid2 style="width: 100%; height: 350px;" class="ag-theme-alpine"
+   [rowData]="rowData2 | async"
+    [columnDefs]="columnDefs2" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+    [rowSelection]="rowSelection" (gridReady)="onGridReady2($event)" pagination>
+  </ag-grid-angular>
+</div>

@@ -1,0 +1,47 @@
+.mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 95%;
+}
+.NumberofVisits
+{
+    width: 30%;
+}
+.ui-loader-background {
+    width:100%;
+    height:100%;
+    top:0;
+    padding: 0;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.3);
+   
+    position: fixed;
+    z-index:100;
+    display:block;
+}
+
+.ui-loading .ui-loader-background {
+    display:block;
+}
+p {
+    font-family: Lato;
+  }
+  .mat-toolbar.mat-accent {
+    background: #eee;
+    color: black;
+    height: auto;
+}
+.toolbar
+{
+    color:black;
+}
+.tool
+{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 0px;
+    margin-left: 0px;
+    background-color: gainsboro;
+    padding: 5px;
+}

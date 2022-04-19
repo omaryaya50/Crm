@@ -1,0 +1,87 @@
+<form class="mt-5">
+    <div class="row">
+      <!--start client code -->
+
+
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="territoryId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Territory' | translate}}</span> </label>
+        <select #territoryId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="obserCustomer.ICustomerFilter.tid" name="territoryId"
+          id="territoryId" (ngModelChange)="onChangeSelectionT($event)">
+          <option selected value=0></option>
+
+          <option *ngFor="let xsector of Territory" value={{xsector.territoryId}}>
+            {{xsector.territoryName}}
+
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="sectorId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Sector' | translate}}</span> </label>
+        <select #sectorId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="obserCustomer.ICustomerFilter.sid" name="sectorId"
+          id="sectorId" (ngModelChange)="onChangeSelectionS($event)">
+          <option selected value=0></option>
+
+          <option *ngFor="let xsector of Sector" value={{xsector.sectorId}}>
+            {{xsector.sectorName}}
+
+          </option>
+        </select>
+      </div>
+
+
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="governorateId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Governorate' | translate}}</span> </label>
+        <select #governorateId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="obserCustomer.ICustomerFilter.gid" name="governorateId"
+          id="governorateId" (ngModelChange)="onChangeSelectionG($event)">
+          <option selected value=0></option>
+
+          <option *ngFor="let xsector of Governorate" value={{xsector.governorateId}}>
+            {{xsector.governorateName}}
+
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="regionId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Region' | translate}}</span> </label>
+        <select #regionId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="obserCustomer.ICustomerFilter.rid" name="regionId"
+          id="regionId" (ngModelChange)="onChangeSelectionR($event)">
+          <option selected value=0></option>
+
+          <option *ngFor="let xsector of Region" value={{xsector.regionId}}>
+            {{xsector.regionName}}
+
+          </option>
+        </select>
+      </div>
+
+
+    </div>
+    <div class="container ">
+      <div class="row ">
+        <div class="btn-group mt-4">
+          <button type="submit" class="btn btn-primary ml-1 " (click)="showData()">Show data</button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <div class="form-row mt-5">
+    <ag-grid-angular #agGrid style="width: 95%; height: 550px;"
+     class="ag-theme-alpine" [rowData]="rowData"
+    [columnDefs]="columnDefs"  [animateRows]="true" [paginationPageSize]="100"
+    [rowBuffer]="100"
+
+    [rowSelection]="rowSelection"
+     (gridReady)="onGridReady($event)"
+    pagination>
+  </ag-grid-angular>
+</div>

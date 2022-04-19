@@ -1,0 +1,208 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container">
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span class="fas fa-home">
+      </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Reports' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <i class="fas fa-sync fa-spin"></i> {{'Customer Class Report' | translate }}
+    </a>
+  </div>
+</div>
+
+<div class="container ">
+
+<div class="form-row mt-5">
+  <div class="form-group col-md-4">
+    <label [style.float]="Rtl? 'right':'left'" for="custClassId"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        {{'Customer Class' | translate}}</span> </label>
+    <select #custClassId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="CustID" name="custClassId"
+      id="custClassId" (ngModelChange)="onChangeSelectionCustomerClass($event)">
+      <option value="0">
+        
+      </option>
+      <option *ngFor="let xsector of CustClass" value={{xsector.custClassId}}>
+        {{xsector.cclName}}
+
+      </option>
+    </select>
+  </div>
+
+
+
+  <div class="form-group col-md-4">
+    <label [style.float]="Rtl? 'right':'left'" for="territoryId"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        {{'Territory' | translate}}</span> </label>
+    <select #territoryId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Tid" name="territoryId"
+      id="territoryId" (ngModelChange)="onChangeSelectionT($event)">
+      <option value="0">
+        
+      </option>
+      <option *ngFor="let xsector of Territory" value={{xsector.territoryId}}>
+        {{xsector.territoryName}}
+
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group col-md-4">
+    <label [style.float]="Rtl? 'right':'left'" for="sectorId"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        {{'Sector' | translate}}</span> </label>
+    <select #sectorId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Sid" name="sectorId" id="sectorId"
+      (ngModelChange)="onChangeSelectionS($event)">
+      <option value="0">
+        
+      </option>
+      <option *ngFor="let xsector of Sector" value={{xsector.sectorId}}>
+        {{xsector.sectorName}}
+
+      </option>
+    </select>
+  </div>
+
+
+  <div class="form-group col-md-4">
+    <label [style.float]="Rtl? 'right':'left'" for="governorateId"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        {{'Governorate' | translate}}</span> </label>
+    <select #governorateId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Gid" name="governorateId"
+      id="governorateId" (ngModelChange)="onChangeSelectionG($event)">
+      <option value="0">
+        
+      </option>
+      <option *ngFor="let xsector of Governorate" value={{xsector.governorateId}}>
+        {{xsector.governorateName}}
+
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group col-md-4">
+    <label [style.float]="Rtl? 'right':'left'" for="regionId"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        {{'Region' | translate}}</span> </label>
+    <select #regionId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Rid" name="regionId" id="regionId"
+      (ngModelChange)="onChangeSelectionR($event)">
+      <option value="0">
+        
+      </option>
+      <option *ngFor="let xsector of Region" value={{xsector.regionId}}>
+        {{xsector.regionName}}
+
+      </option>
+    </select>
+  </div>
+
+
+
+
+  <div class="form-group col-md-4">
+    <label [style.float]="Rtl? 'right':'left'" for="ReportName1"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        {{'Report Name' | translate}}</span> </label>
+
+
+      <input type="text" class="form-control input-sm" name="ReportName1"
+      id="ReportName1" [(ngModel)]="ReportName" placeholder="{{'ReportName' | translate}}"
+      >
+  </div>
+
+</div> <!--.form row-->
+</div><!--.container-->
+
+<!-- <div class="form-row">
+    <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="custClassId"><span [style.float]="Rtl? 'right':'left'"
+                class="badge badge-pill badge-light">
+                {{'Customer Class' | translate}}</span> </label>
+        <select #custClassId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="CustID" name="custClassId"
+            id="custClassId" (ngModelChange)="onChangeSelectionCustomerClass($event)">
+            <option *ngFor="let xsector of CustClass" value={{xsector.custClassId}}>
+                {{xsector.cclName}}
+
+            </option>
+        </select>
+    </div>
+
+   
+
+    <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="ReportName"><span [style.float]="Rtl? 'right':'left'"
+                class="badge badge-pill badge-light">
+                {{'Report Name' | translate}}</span> </label>
+        <input type="text" [(ngModel)]="ReportName" class="form-control input-sm" placeholder="{{'Report Name' | translate}}">
+
+
+    </div>
+
+</div> -->
+<div class="container">
+
+
+<div style="justify-content: center; align-items: center; display: flex;">
+  &nbsp;&nbsp;
+  <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+    class="btn btn-outline-info mt-3" (click)="Filter()">
+    <i class="fa fa-eye" aria-hidden="true"></i> {{'Show Data' | translate }}
+  </button>
+  &nbsp;&nbsp;
+
+</div>
+
+<hr>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <fieldset [dir]="Rtl? 'right':'left'">
+      <legend class="text-success">{{'Classification' | translate}}</legend>
+    </fieldset>
+  </div>
+  <div class="form-group col-md-6">
+    <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+      class="btn btn-outline-success" (click)="ExportExcel(FilteredList)">
+      <i class="fa fa-arrow-down"></i>
+      {{'Export Classification To Excel' | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="form-row">
+  <ag-grid-angular #agGrid style="width: 100%; height: 550px;" class="ag-theme-alpine" [rowData]="rowData | async"
+    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" 
+    
+    animateRows [rowSelection]="rowSelection"
+    (gridReady)="onGridReady($event)" pagination>
+  </ag-grid-angular>
+</div>
+
+<hr>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <fieldset [dir]="Rtl? 'right':'left'">
+      <legend class="text-success">{{'Total' | translate}}</legend>
+    </fieldset>
+  </div>
+  <div class="form-group col-md-6">
+    <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+      class="btn btn-outline-success" (click)="ExportExcel(Total)">
+
+      <i class="fa fa-arrow-down"></i>
+      {{'Export Total To Excel' | translate }}
+
+    </button>
+
+  </div>
+</div>
+
+<div class="form-row">
+  <ag-grid-angular #agGrid2 style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="rowData2 | async"
+    [columnDefs]="columnDefs2" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+    [rowSelection]="rowSelection" (gridReady)="onGridReady2($event)" pagination>
+  </ag-grid-angular>
+</div>
+</div>

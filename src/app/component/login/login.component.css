@@ -1,0 +1,163 @@
+a {
+  color: inherit;
+  cursor: pointer
+}
+
+.card {
+  margin: 0px 40px;
+}
+
+.login--section .logo {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #2d88ce;
+  border-radius: 60px;
+  margin:  0 auto;
+  margin-bottom: 2em;
+}
+
+.login--section .logo img {
+  width: 70%;
+  height: 70%;
+  margin-top: 16px;
+}
+
+#userName {
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, .075);
+  letter-spacing: 1px
+}
+
+#password {
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, .075);
+  letter-spacing: 1px;
+
+}
+.login--lable {
+  color: #1A237E;
+  font-weight: 600;
+  margin-left: 1em;
+  margin-bottom: .5em;
+}
+.text-sm {
+  font-size: 14px !important
+}
+
+.login--form::placeholder {
+  color: #BDBDBD;
+  opacity: 1;
+  font-weight: 300
+}
+
+.login--form:-ms-input-placeholder {
+  color: #BDBDBD;
+  font-weight: 300
+}
+
+.login--form::-ms-input-placeholder {
+  color: #BDBDBD;
+  font-weight: 300
+}
+
+input,
+textarea {
+  padding: 10px 12px 10px 12px;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  margin-top: 2px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #2C3E50;
+  font-size: 14px;
+  letter-spacing: 1px
+}
+
+input:focus,
+textarea:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #304FFE;
+  outline-width: 0
+}
+
+button:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  outline-width: 0
+}
+
+.btn-blue {
+  background-color: #1A237E;
+  width: 120px;
+  color: #fff;
+  border-radius: 17px
+}
+
+.btn-blue:hover {
+  cursor: pointer;
+  opacity: .9;
+}
+
+.bg-blue {
+  color: #fff;
+
+}
+
+.field-icon {
+  float: right;
+  margin-left: -36px;
+  margin-top: 15px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.login--form {
+  max-width: 30%;
+  margin: 0 auto;
+  padding-top: 10vh;
+}
+
+.login--btn {
+  padding: .3em 3em;
+}
+
+.login--section {
+  background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+  background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+  background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+  background: linear-gradient(-135deg, #c850c0, #4158d0);
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 2000px) {
+  /* .logo {
+    margin-left: 50px;
+
+  } */
+
+  .card {
+    border: 1px solid #EEEEEE !important;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+
+
+}
+
+@media (max-width: 768px) {
+
+
+  .login--form {
+    max-width: 100% !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .card {
+    margin: 0;
+  }
+}

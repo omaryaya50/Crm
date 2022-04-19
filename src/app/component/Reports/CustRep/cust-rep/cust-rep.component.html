@@ -1,0 +1,303 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container">
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Reports' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Customers Reports' | translate }}
+    </a>
+  </div>
+</div>
+
+<div class="container my-3">
+  <div class="form-row" *ngIf="!ViewReport">
+    <!-- start Sales Representative -->
+    <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Sales Representative' | translate}}</span> </label>
+      <select #salesRepId="ngModel" class="custom-select" [(ngModel)]="SalesID" name="salesRepId" id="salesRepId"
+        (ngModelChange)="onChangeSelectionCustomerBySalesID($event)">
+        <option></option>
+        <option *ngFor="let xsector of AllSales" value={{xsector.salesRepId}}>
+          {{xsector.salesRepName}}
+        </option>
+      </select>
+    </div>
+    <!-- End Sales Representative -->
+    <!--start Customer -->
+  <!--  <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="customerId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Customer' | translate}}</span> </label>
+      <select #customerId="ngModel" class="custom-select" [(ngModel)]="CustomerID" name="customerId" id="customerId"
+        (ngModelChange)="onChangeSelectionByCustomer($event)">
+        <option *ngFor="let xsector of AllCustomers" value={{xsector.customerId}}>
+          {{xsector.customerName}}
+        </option>
+      </select>
+    </div>-->
+    <!--End Customer -->
+    <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="customerId"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        {{'Customer' | translate}}</span> </label>
+      <ng-multiselect-dropdown name="product"[settings]="dropdownSettings2"
+        [data]="AllCustomers" [(ngModel)]="custlist">
+      </ng-multiselect-dropdown>
+    </div>
+    <!--start From Date -->
+    <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="fromDate"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'From Date' | translate}}</span>
+      </label>
+
+      <input #fromDate="ngModel" type="date" name="fromDate" [(ngModel)]="FromDate" class="form-control" id="fromDate">
+    </div>
+    <!--End From Date -->
+    <!-- start To Date -->
+    <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="toDate"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'To Date' | translate}}</span> </label>
+
+      <input #toDate="ngModel" type="date" name="toDate" [(ngModel)]="ToDate" class="form-control" id="toDate">
+    </div>
+    <!-- End To Date -->
+
+  </div>
+  <!--.form-row-->
+</div>
+<!--.container-->
+<div class="container">
+<div class="from-row mt-3" style="margin-left: 30%;" *ngIf="!ViewReport">
+  <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption" class="btn btn-outline-info"
+    (click)="Filter()">
+    <i class="fa fa-filter" aria-hidden="true"></i> {{'Filter' | translate }}
+  </button>
+  <button style="background-color: rgb(red, green, blue);" type="button" id="btnoption"
+    class="btn btn-outline-info mx-3" (click)="ViewQuestionAnswer()">
+    <i class="fa fa-eye" aria-hidden="false"></i> {{'View Customer Report' | translate }}
+  </button>
+
+</div>
+</div>
+
+
+
+<div class="container">
+  <hr *ngIf="!ViewReport">
+</div>
+
+
+<div class="container mb-5"> 
+  <div class="form-row" *ngIf="!ViewReport">
+    <div class="form-group col-md-3">
+      <label [style.float]="Rtl? 'right':'left'" for="ReportName"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Report Name' | translate}}</span> </label>
+      <input type="text" [(ngModel)]="ReportName" class="form-control input-sm"
+        placeholder="{{'Report Name' | translate}}">
+  
+  
+    </div>
+  
+    <div class="form-group col-md-6">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+        class="btn btn-outline-success btn-sm"  (click)="ExportExcel(CustomerVisitsList)">
+  
+        <i class="fa fa-arrow-down"></i>
+        {{'Export To Excel' | translate }}
+  
+      </button>
+  
+    </div>
+    <ag-grid-angular #agGrid style="width: 100%; height: 400px;" class="ag-theme-alpine" [rowData]="rowData | async"
+      [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+      [rowSelection]="rowSelection" (gridReady)="onGridReady($event)" pagination>
+    </ag-grid-angular>
+  </div>
+</div>
+
+
+
+<ng-container class="form-row container" *ngIf="ViewReport">
+
+  <div class="form-row">
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="visitNumber"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Visit Number' | translate}}</span> </label>
+
+        <input #visitNumber="ngModel" type="text" name="visitNumber"
+          [(ngModel)]="CustomerVisitsSerc.IVCustomerVisits.visitNumber" class="form-control input-sm" id="visitNumber"
+          readonly>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="date"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Date' | translate}}</span> </label>
+
+        <input #date="ngModel" type="text" name="date" [(ngModel)]="CustomerVisitsSerc.IVCustomerVisits.date"
+          class="form-control input-sm" id="date" readonly>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="customerName"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Customer' | translate}}</span> </label>
+
+        <input #customerName="ngModel" type="text" name="customerName"
+          [(ngModel)]="CustomerVisitsSerc.IVCustomerVisits.customerName" class="form-control input-sm" id="customerName"
+          readonly>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="salesRepName"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Sales Representative' | translate}}</span> </label>
+
+        <input #salesRepName="ngModel" type="text" name="salesRepName"
+          [(ngModel)]="CustomerVisitsSerc.IVCustomerVisits.salesRepName" class="form-control input-sm" id="salesRepName"
+          readonly>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="versionActulCode"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Version Code' | translate}}</span> </label>
+
+        <input #versionActulCode="ngModel" type="text" name="versionActulCode"
+          [(ngModel)]="VersionServ.Version.versionActulCode" class="form-control input-sm" id="versionActulCode"
+          readonly>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="versionName"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Version Name' | translate}}</span> </label>
+
+        <input #versionName="ngModel" type="text" name="versionName" [(ngModel)]="VersionServ.Version.versionName"
+          class="form-control input-sm" id="versionName" readonly>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <hr>
+
+  <div style="margin-bottom: 10px;" class="form-row">
+    <button type="button" id="btnoption" class="btn btn-dark btn-lg">
+      {{'Questions' | translate }}
+    </button>
+  </div>
+
+  <li *ngFor="let content of QuestionsList">
+    <label style="font-size: large; font-weight: bold;">{{content.questionName}}</label>
+    <div *ngFor="let customer of CustomerVisits">
+      <div style="margin-left: 30px;" *ngIf="customer.questionCode==content.questionCode">
+
+        <div style="margin-bottom: 20px;" *ngIf="customer.questionNotes != null">
+
+          <label [style.float]="Rtl? 'right':'left'" style="font-size: small; font-weight: bold;" for="questionNotes">
+            {{'Question Notes' | translate}}</label>
+          <input #questionNotes="ngModel" type="text" name="questionNotes" [(ngModel)]="customer.questionNotes"
+            class="form-control input-sm" id="questionNotes" readonly>
+        </div>
+
+        <div *ngIf="content.attachmentYN">
+          <div *ngFor="let Customerfile of CustomerVisitsFilesList">
+            <div *ngIf="content.questionCode== Customerfile.questionCode">
+
+              <div *ngIf="Customerfile.filePath != ''" style="margin-bottom: 20px;">
+
+                <label [style.float]="Rtl? 'right':'left'" style="font-size: small; font-weight: bold;" for="filePath">
+                  {{'File Path' | translate}}</label>
+                <input #filePath="ngModel" type="text" name="filePath" [(ngModel)]="Customerfile.filePath"
+                  class="form-control input-sm" id="filePath" readonly>
+                <div style="margin-top: 10px;" class="form-group col-md-6">
+                  <button type="button" class="btn btn-light btn-sm" (click)="DownloadFile(Customerfile.filePath)">
+                    <span class="fas fa-download">&nbsp;&nbsp;</span>{{'Download File' | translate}}
+                    &nbsp;&nbsp;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="content.progId>0">
+          <div *ngFor="let agent of Agents">
+            <div *ngIf="customer.progIDAnswer== agent.agentCode">
+
+              <div style="margin-bottom: 20px;">
+
+                <label [style.float]="Rtl? 'right':'left'" style="font-size: small; font-weight: bold;" for="agentName">
+                  {{'Agent' | translate}}</label>
+                <input #agentName="ngModel" type="text" name="agentName" [(ngModel)]="agent.agentName"
+                  class="form-control input-sm" id="agentName" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="customer.answerTypeCode!=null">
+          <label [style.float]="Rtl? 'right':'left'" style="font-size: small; font-weight: bold;" for="questionNotes">
+            {{'Question Answer' | translate}}</label>
+          <input *ngIf="customer.answerTypeCode==1" #answerName="ngModel" type="text" name="answerName"
+            [(ngModel)]="customer.answerName" class="form-control input-sm" id="answerName" readonly>
+
+          <input *ngIf="customer.answerTypeCode==2" #rateNumber="ngModel" type="text" name="rateNumber"
+            [(ngModel)]="customer.rateNumber" class="form-control input-sm" id="rateNumber" readonly>
+
+          <div *ngIf="customer.answerTypeCode==3">
+            <div *ngFor="let Customerchoises of CustomerVisitAnswerChoisesList">
+              <div *ngFor="let choises of AnswerChoisesList">
+
+                <input *ngIf="Customerchoises.answerChoiseCode==choises.answerChoiseCode" #answerChoiseName="ngModel"
+                  type="text" name="answerChoiseName" [(ngModel)]="choises.answerChoiseName"
+                  class="form-control input-sm" id="answerChoiseName" readonly>
+
+                <div style="margin-bottom: 20px;" *ngIf="Customerchoises.answerChoiseNotes!=null">
+
+                  <label [style.float]="Rtl? 'right':'left'" style="font-size: small; font-weight: bold;"
+                    for="questionNotes">
+                    {{'Choise Notes' | translate}}</label>
+                  <input #answerChoiseNotes="ngModel" type="text" name="answerChoiseNotes"
+                    [(ngModel)]="Customerchoises.answerChoiseNotes" class="form-control input-sm" id="answerChoiseNotes"
+                    readonly>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div>
+          <div  >
+          <label [style.float]="Rtl? 'right':'left'" style="font-size: small; font-weight: bold;" for="questionNotes">
+            {{'Question Answer' | translate}}</label>
+            <input   type="text" name="noanswer"
+            [(ngModel)]="noanswer" class="form-control input-sm" id="noanswer" readonly>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </li>
+
+
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+  <button style="margin-left: 400px; margin-top: 20px;" type="button" id="btnoption" class="btn btn-success btn-lg"
+    (click)="cancel()">
+    <i class="fas fa-undo" aria-hidden="true"></i> {{'Back' | translate }}
+  </button>
+
+
+</ng-container>

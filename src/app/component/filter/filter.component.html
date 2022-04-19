@@ -1,0 +1,112 @@
+<div class="container">
+  <h2 class="h2 mt-3 mb-5">
+    {{'filterclint' | translate }}  
+  </h2>
+  <form>
+    <div class="row">
+      <!--start client code -->
+
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="customerId"><span [style.float]="Rtl? 'right':'left'"
+                class="badge badge-pill badge-light">
+                {{'Customer' | translate}}</span> </label>
+        <select #customerId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="CustomerID" name="customerId"
+            id="customerId" (ngModelChange)="onChangeSelectionByCustomer($event)">
+            <option *ngFor="let xsector of AllCustomers" value={{xsector.customerId}}>
+                {{xsector.customerName}}
+
+            </option>
+        </select>
+    </div>
+
+      <!--End client code -->
+
+      <!-- start Delegate code -->
+      <div class="form-group col-md-6" *ngIf=this.Admin>
+        <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Sales Representative' | translate}}</span> </label>
+        <select #salesRepId="ngModel" class="custom-select custom-select-sm"
+          [(ngModel)]="obserCustomer.obIcustomer.salesRepId" name="salesRepId" id="salesRepId"
+          (ngModelChange)="onChangeSelectionSaleRep($event)">
+          <option *ngFor="let xsector of salesRep" value={{xsector.salesRepId}}>
+            {{xsector.salesRepLatName}}
+          </option>
+        </select>
+      </div>
+      <!-- End Delegate code -->
+          <!-- start Territory -->
+          <div class="form-group col-md-6">
+            <label [style.float]="Rtl? 'right':'left'" for="territoryId"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'Territory' | translate}}</span> </label>
+            <select #territoryId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Tid" name="territoryId"
+                id="territoryId" (ngModelChange)="onChangeSelectionT($event)">
+                <option *ngFor="let xsector of Territorys" value={{xsector.territoryId}}>
+                    {{xsector.territoryName}}
+    
+                </option>
+            </select>
+        </div> 
+          <!-- End Territory -->
+
+      <!-- start Sector -->
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="sectorId"><span [style.float]="Rtl? 'right':'left'"
+                class="badge badge-pill badge-light">
+                {{'Sector' | translate}}</span> </label>
+        <select #sectorId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Sid" name="sectorId"
+            id="sectorId" (ngModelChange)="onChangeSelectionS($event)">
+            <option *ngFor="let xsector of Sector" value={{xsector.sectorId}}>
+                {{xsector.sectorName}}
+
+            </option>
+        </select>
+    </div> 
+      <!-- End Sector -->
+
+  
+
+      <!-- start briefness -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="briefness">{{'Governorate'|translate}}</label>
+          <div class="input-group mb-3">
+            <select class="custom-select" id="briefness">
+              <option selected>Choose...</option>
+              <option value="1">123</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- End briefness -->
+
+      <!-- start area -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="area">{{'Region'|translate}}</label>
+          <div class="input-group mb-3">
+            <select class="custom-select" id="area">
+              <option selected>Choose...</option>
+              <option value="1">123</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- End area -->
+
+
+      <button type="submit" class="btn btn-primary ml-1">Show data</button>
+    </div>
+
+  </form>
+  <div class="form-row mt-5">
+    <ag-grid-angular #agGrid style="width: 95%; height: 550px;" class="ag-theme-alpine" [rowData]="rowData | async"
+    [columnDefs]="columnDefs"  [animateRows]="true" [paginationPageSize]="100"
+    [rowBuffer]="100" 
+    (rowDoubleClicked)="onrowDoubleClicked($event)"
+    [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"
+    pagination>
+  </ag-grid-angular>
+  </div>
+</div>

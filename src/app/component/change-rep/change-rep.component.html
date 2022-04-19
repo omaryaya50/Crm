@@ -1,0 +1,123 @@
+<ngx-spinner></ngx-spinner>
+<div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> تغير المندوب للعميل</span>
+   
+  
+  </div>
+  
+  <br>
+<form #Rep="ngForm" (ngSubmit)="onSubmit(Rep)">
+<div class="row">
+<div class="form-group col-md-6">
+    <label [style.float]="Rtl? 'right':'left'" for="salesRepId">
+        <span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        "مندوب المبيعات الحالى"</span> </label>
+        <select #salesRepId="ngModel" class="custom-select custom-select-sm"
+        [(ngModel)]="oldsalesRepId" name="salesRepId" id="salesRepId"
+        (ngModelChange)="onChangeSelectionSaleRepOld($event)">
+        <option *ngFor="let xsector of salesRep" value={{xsector.salesRepId}}>
+          {{xsector.salesRepLatName}}
+  
+        </option>
+      </select>
+</div>
+<div class="form-group col-md-6">
+    <label [style.float]="Rtl? 'right':'left'" for="salesRepId2"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+       "مندوب المبيعات الجديد"</span> </label>
+ 
+
+<select #salesRepId="ngModel" class="custom-select custom-select-sm"
+[(ngModel)]="newsalesRepId" name="salesRepId2" id="salesRepId2"
+(ngModelChange)="onChangeSelectionCustomerBySalesID($event)">
+<option *ngFor="let xsector of AllSales" value={{xsector.salesRepId}}>
+  {{xsector.salesRepLatName}}
+
+</option>
+</select>
+</div> 
+</div>
+
+<div class="row">
+  
+</div>
+<br>
+<div class="row">
+    <div class="form-group col-md-6">
+        <button type="button" class="btn btn-info" (click)="onShow()">عرض العملاء</button>
+    </div>
+    <div class="form-group col-md-6">
+        <button type="button" class="btn btn-danger" (click)="onUpdate()">تحديث البيانات</button>
+    </div>
+</div>
+<div class="row">
+    <ag-grid-angular #agGrid style="width: 95%; height: 450px;" class="ag-theme-alpine"
+     [rowData]="rowData | async"
+    [columnDefs]="columnDefs"  [enableRtl]="false" animateRows
+    [rowSelection]="rowSelection" 
+     (gridReady)="onGridReady($event)"
+     (rowDoubleClicked)="onrowDoubleClicked($event)"
+    pagination>
+  </ag-grid-angular>
+</div>
+
+</form>
+
+<ng-template #template>
+  <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle"></h6>
+          <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #CustClass="ngForm" (ngSubmit)="onSubmit2(CustClass)">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="xxRepId"><span [style.float]="Rtl? 'right':'left'"
+                  class="badge badge-pill badge-light">
+                 "مندوب المبيعات الجديد"</span> </label>
+           
+          
+          <select #xxRepId="ngModel" class="custom-select custom-select-sm"
+          [(ngModel)]="RepId" name="xxRepId" id="xxRepId"
+          (ngModelChange)="onChangeRepId($event)">
+          <option value=0>
+
+          </option>
+          <option *ngFor="let xsector of AllSalesfilter" value={{xsector.salesRepId}}>
+            {{xsector.salesRepName}}
+          
+          </option>
+          </select>
+              </div>
+            
+            </div>
+           
+
+            <div class="form-row">
+              <div class="col text-center">
+                <button       [hidden]="!_IPrgPer.insert"
+                class="btn btn-success btn-sm" data-style="zoom-in">
+                  <span class="fas fa-save"></span>{{'Save' | translate}}
+                
+                </button>
+             
+
+
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>

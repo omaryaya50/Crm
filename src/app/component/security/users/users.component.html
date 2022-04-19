@@ -1,0 +1,211 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container">
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Admin' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Users' | translate }}
+    </a>
+
+  </div>
+</div>
+
+<br>
+<div class="container">
+
+  <div class="form-row">
+    &nbsp;&nbsp;&nbsp;
+    <button type="button" id="btnoption" class="btn btn-success btn-sm" (click)="Addnewrecord(template)">
+      <i class="fas fa-plus"></i> {{'AddNewRecord' | translate }}
+    </button>
+    &nbsp;&nbsp;
+    <button type="button" id="btnoption" class="btn btn-info btn-sm" (click)="UpdateRecord(template)">
+      <i class="fas fa-edit"></i> {{'Update' | translate }}
+    </button>
+
+  </div>
+</div>
+<div class="container my-4">
+  <hr>
+</div>
+<div class="container">
+<ng-template #template>
+  <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle">{{title| translate}}</h6>
+          <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #Users="ngForm" (ngSubmit)="onSubmit(Users)">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="userName"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'Email' | translate}}</span> </label>
+
+                <input #userName="ngModel" type="email" name="userName" [(ngModel)]="obserUser.Seruser.userName"
+                  class="form-control input-sm" id="userName" placeholder="{{'Email' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && userName.invalid && userName.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="name"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">{{'Name' | translate}}</span>
+                </label>
+                <input #name="ngModel" type="text" data-dismiss="modal" class="form-control input-sm" name="name"
+                  id="name" [(ngModel)]="obserUser.Seruser.name" placeholder="{{'Name' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && name.invalid && name.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="nameLat"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'LatName' | translate}}</span> </label>
+
+                <input #nameLat="ngModel" type="text" name="nameLat" [(ngModel)]="obserUser.Seruser.nameLat"
+                  class="form-control input-sm" id="userName" placeholder="{{'LatName' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && nameLat.invalid && nameLat.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="mobile"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">{{'mobile' | translate}}</span>
+                </label>
+                <input #mobile="ngModel" type="text" data-dismiss="modal" class="form-control input-sm" name="mobile"
+                  id="mobile" [(ngModel)]="obserUser.Seruser.mobile" placeholder="{{'mobile' | translate}}">
+
+              </div>
+
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="mobile1"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'mobile1' | translate}}</span> </label>
+
+                <input #mobile1="ngModel" type="text" name="mobile1" [(ngModel)]="obserUser.Seruser.mobile1"
+                  class="form-control input-sm" id="mobile1" placeholder="{{'mobile1' | translate}}">
+
+              </div>
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="address"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">{{'address' | translate}}</span>
+                </label>
+                <textarea #address="ngModel" type="text" data-dismiss="modal" rows="3" class="form-control input-sm"
+                  name="address" id="address" [(ngModel)]="obserUser.Seruser.address"
+                  placeholder="{{'address' | translate}}">
+                  </textarea>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="password"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'Password' | translate}}</span> </label>
+
+                <input #password="ngModel" type="text" name="password" [(ngModel)]="obserUser.Seruser.password"
+                  class="form-control input-sm" id="password" placeholder="{{'Password' | translate}}">
+
+              </div>
+
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="groupId">
+                  <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'Groups' | translate}}</span>
+                </label>
+                <select #groupId="ngModel" class="custom-select custom-select-sm"
+                  [(ngModel)]="obserUser.Seruser.groupId" name="groupId" id="groupId"
+                  (ngModelChange)="onChangeSelection($event)" required>
+                  <option *ngFor="let xgroup of groups" value={{xgroup.groupId}}>
+                    {{xgroup.groupName}}
+                  </option>
+                </select>
+
+
+              </div>
+
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="PerLevel"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'PerLevel' | translate}}</span> </label>
+                    <select #perLevel="ngModel" class="custom-select custom-select-sm"
+                    (ngModelChange)="onChangePerLevel($event)"
+
+                    [(ngModel)]="obserUser.Seruser.perLevel" name="PerLevel" id="PerLevel">
+                    <option value=0> All </option>
+                    <option value=1> Territory </option>
+                    <option value=2> Sector </option>
+                    <option value=3> Governorate </option>
+                    <option value=4> Region </option>
+
+                    </select>
+               
+                
+              </div>
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="mobile"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">{{'mobile' | translate}}</span>
+                </label>
+                <input #mobile="ngModel" type="text" data-dismiss="modal" class="form-control input-sm" name="mobile"
+                  id="mobile" [(ngModel)]="obserUser.Seruser.mobile" placeholder="{{'mobile' | translate}}">
+
+              </div>
+
+            </div>
+            <div class="form-row">
+              <div class="col text-center">
+                <button class="btn btn-success btn-sm" data-style="zoom-in">
+                  <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                </button>
+                &nbsp;&nbsp;
+                <button type="button" class="btn btn-dark btn-sm" (click)="reset()">
+                  <span class="fas fa-undo"> &nbsp;&nbsp;</span> {{'Reset' | translate}}&nbsp;&nbsp;</button>
+                &nbsp;&nbsp;
+
+                <button type="button" class="btn btn-danger btn-sm" *ngIf="obserUser.Seruser.id>0"
+                  (click)="Delete( obserUser.Seruser.userName)">
+                  <span class="fas fa-trash-alt">&nbsp;&nbsp;</span>{{'Delete' | translate}} &nbsp;&nbsp;</button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                </div>
+              </div>
+            </div>
+         
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>
+</div>
+<div class="container">
+  <div class="form-row">
+    <ag-grid-angular #agGrid style="width: 100%; height: 250px;" class="ag-theme-alpine" [rowData]="rowData | async"
+      [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+      [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"
+      pagination>
+    </ag-grid-angular>
+  </div>
+</div>

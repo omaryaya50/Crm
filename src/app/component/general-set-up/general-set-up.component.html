@@ -1,0 +1,134 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container">
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Admin' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'General Set Up' | translate }}
+    </a>
+  </div>
+</div>
+
+<br>
+<div class="container">
+  <div class="form-row">
+    <button type="button" id="btnoption" class="btn btn-success btn-sm" (click)="Addnewrecord(template)">
+      <i class="fas fa-plus"></i> {{'AddNewRecord' | translate }}
+    </button>
+    <button type="button" id="btnoption" class="btn btn-info btn-sm mx-3" (click)="UpdateRecord(template)">
+      <i class="fas fa-edit"></i> {{'Update' | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="container my-4">
+    <hr>
+</div>
+
+<div class="container">
+<ng-template #template>
+  <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle">{{title| translate}}</h6>
+          <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #setUp="ngForm" (ngSubmit)="onSubmit(setUp)">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="mail"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'Email' | translate}}</span> </label>
+
+                <input #mail="ngModel" type="email" name="mail" [(ngModel)]="SetUpServ._IsetUp.mail"
+                  class="form-control input-sm" id="mail" placeholder="{{'Email' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && mail.invalid && mail.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="password"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">{{'Password' | translate}}</span>
+                </label>
+                <input #password="ngModel" type="text" name="password" data-dismiss="modal"
+                  class="form-control input-sm" password="password" id="password"
+                  [(ngModel)]="SetUpServ._IsetUp.password" placeholder="{{'Password' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && password.invalid && password.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="mailserver"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'Server' | translate}}</span> </label>
+
+                <input #mailserver="ngModel" type="text" name="mailserver" [(ngModel)]="SetUpServ._IsetUp.mailserver"
+                  class="form-control input-sm" id="userName" placeholder="{{'Server' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && mailserver.invalid && mailserver.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="port"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">{{'Port' | translate}}</span>
+                </label>
+                <input #port="ngModel" name="port" data-dismiss="modal" class="form-control input-sm" name="port"
+                  id="port" [(ngModel)]="SetUpServ._IsetUp.port" type="number" placeholder="{{'Port' | translate}}">
+
+              </div>
+
+            </div>
+
+            <div class="form-row">
+              <div class="col text-center">
+                <button class="btn btn-success btn-sm" data-style="zoom-in">
+                  <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                </button>
+                &nbsp;&nbsp;
+                <button type="button" class="btn btn-dark btn-sm" (click)="reset()">
+                  <span class="fas fa-undo"> &nbsp;&nbsp;</span>
+                  {{'Reset' | translate}}&nbsp;&nbsp;</button>
+                &nbsp;&nbsp;
+
+                <button type="button" class="btn btn-danger btn-sm" *ngIf="SetUpServ._IsetUp.mail!=null"
+                  (click)="Delete(SetUpServ._IsetUp.mail)">
+                  <span class="fas fa-trash-alt">&nbsp;&nbsp;</span>{{'Delete' | translate}}
+                  &nbsp;&nbsp;</button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                </div>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>
+</div>
+<div class="container">
+<div class="form-row">
+  <ag-grid-angular #agGrid style="width: 100%; height: 250px;" class="ag-theme-alpine" [rowData]="rowData | async"
+    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+    [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"
+    pagination>
+  </ag-grid-angular>
+</div>
+</div>

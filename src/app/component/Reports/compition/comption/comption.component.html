@@ -1,0 +1,90 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container">
+  <div class="form-row" class="tool">
+
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Reports' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Competing Merchants' | translate }}
+    </a>
+  </div>
+</div>
+
+
+<br>
+
+<div class="container">
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="competitionCompanyId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Company' | translate}}</span> </label>
+      <select #competitionCompanyId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="CustID"
+        name="competitionCompanyId" id="competitionCompanyId" (ngModelChange)="onChangeSelectionCustomerClass($event)">
+       <option value="0">
+         
+       </option>
+        <option *ngFor="let xsector of CustClass" value={{xsector.competitionCompanyId}}>
+          {{xsector.competitionCompanyName}}
+
+        </option>
+      </select>
+    </div>
+
+
+
+    <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="ReportName"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Report Name' | translate}}</span> </label>
+      <input type="text" [(ngModel)]="ReportName" class="form-control input-sm"
+        placeholder="{{'Report Name' | translate}}">
+
+
+    </div>
+
+  </div>
+</div>
+<div class="container">
+
+  <div class="form-row mt-3">
+    <div class="form-group col-md-2">
+
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+        class="btn btn-outline-info" (click)="Filter()">
+        <i class="fa fa-eye" aria-hidden="true"></i> {{'Show Data' | translate }}
+      </button>
+    </div>
+
+    <div class="form-group col-md-4">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+        class="btn btn-outline-info" (click)="without()">
+        <i class="fa fa-eye" aria-hidden="true"></i> {{'Show Customers Without Companies' | translate }}
+      </button>
+    </div>
+
+
+
+    <div class="form-group col-md-3">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+        class="btn btn-outline-info" (click)="ExportExcel()">
+        <i class="fa fa-arrow-down"></i>
+        {{'Export To Excel' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="container">
+  <div class="form-row">
+    <ag-grid-angular #agGrid style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="rowData | async"
+      [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" animateRows [rowSelection]="rowSelection"
+      (gridReady)="onGridReady($event)" pagination>
+    </ag-grid-angular>
+  </div>
+</div>

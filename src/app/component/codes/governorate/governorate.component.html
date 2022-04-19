@@ -1,0 +1,204 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container mb-3">
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Code' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Governorate' | translate}}
+    </a>
+  </div>
+</div>
+
+<div class="container">
+  <ng-template [ngIf]="enterymode==1">
+    <form #Governorate="ngForm" (ngSubmit)="onSubmit(Governorate)">
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="governorateName"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'Governorate Name' | translate}}</span> </label>
+          <input #governorateName="ngModel" type="text" name="governorateName"
+            [(ngModel)]="obserGovernorate.obIGovernorate.governorateName" class="form-control input-sm"
+            id="governorateName" placeholder="{{'Name' | translate}}" required>
+          <div class="text-danger" *ngIf="isSubmitted && governorateName.invalid && governorateName.errors?.required ">
+            <small>{{'required' | translate}}</small>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="governorateLatName"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">{{'Governorate LatName' | translate}}</span>
+          </label>
+          <input #governorateLatName="ngModel" type="text" data-dismiss="modal" class="form-control input-sm"
+            name="governorateLatName" id="governorateLatName"
+            [(ngModel)]="obserGovernorate.obIGovernorate.governorateLatName" placeholder="{{'LatName' | translate}}"
+            required>
+          <div class="text-danger"
+            *ngIf="isSubmitted && governorateLatName.invalid && governorateLatName.errors?.required ">
+            <small>{{'required' | translate}}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="orders">{{'Territory' | translate}}</label>
+          <select #territoryId="ngModel" class="custom-select custom-select-sm"
+            [(ngModel)]="obserGovernorate.obIGovernorate.territoryId" name="territoryId" id="territoryId"
+            (ngModelChange)="onChangeSelection($event)" required>
+            <option *ngFor="let xTerritory of Territorys" value={{xTerritory.territoryId}}>
+              {{xTerritory.territoryLatName}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="orders">{{'Sector' | translate}}</label>
+          <select *ngIf="obserGovernorate.obIGovernorate.territoryId>0" #sectorId="ngModel"
+            class="custom-select custom-select-sm" [(ngModel)]="obserGovernorate.obIGovernorate.sectorId"
+            name="sectorId" id="sectorId" (ngModelChange)="onChangeSelectionSector($event)" required>
+            <option *ngFor="let xsector of sectors" value={{xsector.sectorId}}>
+              {{xsector.sectorLatName}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <hr>
+      <div class="form-row">
+        <div class="mb-4">
+          <button [hidden]="!_IPrgPer.insert" type="button" class="btn btn-outline-success btn-sm" (click)="insertFooterRow(template)">
+            {{'AddnewRow' | translate}}
+          </button>
+          <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-outline-info btn-sm mx-3" (click)="UpdateFooterRow(template)">
+            <i class="fas fa-edit"></i><small> {{'Updaterow' | translate }}</small>
+          </button>
+          <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-outline-danger btn-sm" (click)="deleteSelectedRows()">
+            <small> {{'deleteRow' | translate}}</small>
+          </button>
+        </div>
+        <ng-template #template>
+          <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title" id="exampleModalLongTitle">{{title| translate}}</h6>
+                  <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form #Region="ngForm" (ngSubmit)="onSubmitRegion(Region)">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label [style.float]="Rtl? 'right':'left'" for="regionName"><span
+                            [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                            {{'Region Name' | translate}}</span> </label>
+                        <input #regionName="ngModel" type="text" name="regionrName"
+                          [(ngModel)]="obserRegionService.oboneRegion.regionName" class="form-control input-sm"
+                          id="regionName" placeholder="{{'Name' | translate}}" required>
+                        <div class="text-danger"
+                          *ngIf="isSubmitted && regionName.invalid && regionName.errors?.required ">
+                          <small>{{'required' | translate}}</small>
+                        </div>
+                        <input #regionId="ngModel" type="text" name="regionId"
+                          [(ngModel)]="obserRegionService.oboneRegion.regionId" class="form-control input-sm"
+                          id="regionId" placeholder="regionId">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label [style.float]="Rtl? 'right':'left'" for="regionLatName">
+                          <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                            {{'Region LatName' | translate}}</span>
+                        </label>
+                        <input #regionLatName="ngModel" type="text" class="form-control input-sm" name="regionLatName"
+                          id="regionLatName" [(ngModel)]="obserRegionService.oboneRegion.regionLatName"
+                          placeholder="{{'LatName' | translate}}" required>
+                        <div class="text-danger"
+                          *ngIf="isSubmitted && regionLatName.invalid && regionLatName.errors?.required ">
+                          <small>{{'required' | translate}}</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="col text-center">
+                        <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+                          <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                          &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                        </button>
+
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <br>
+
+        <ag-grid-angular #agGridinsert style="width: 100%; height: 250px;" class="ag-theme-alpine"
+          [rowData]="rowDatainsert | async" [columnDefs]="columnDefsinsert" [enableRtl]="Rtl"
+          (gridReady)="onGridReadyinsert($event)" animateRows [rowSelection]="rowSelection"
+          (selectionChanged)="onSelectionChangedinsert($event)">
+        </ag-grid-angular>
+      </div>
+      <br>
+
+
+      <div class="row">
+        <div class="col text-center">
+          <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+            <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+            &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+          </button>
+          &nbsp;&nbsp;
+
+          <button type="button" class="btn btn-outline-dark btn-sm" (click)="CancelSave()">
+            <span class="fas fa-undo"> &nbsp;&nbsp;</span> {{'Cancel' | translate}}&nbsp;&nbsp;</button>
+          &nbsp;&nbsp;
+
+          <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-danger btn-sm" *ngIf="obserGovernorate.obIGovernorate.governorateId>0"
+            (click)="DeleteCurrentRecord(obserGovernorate.obIGovernorate.governorateId)">
+            <span class="fas fa-trash-alt">&nbsp;&nbsp;</span>{{'Delete' | translate}} &nbsp;&nbsp;</button>
+
+        </div>
+      </div>
+      <br>
+
+
+
+    </form>
+  </ng-template>
+
+  <ng-template [ngIf]="enterymode==0">
+    <div class="form-row">
+      &nbsp;&nbsp;&nbsp;
+      <button [hidden]="!_IPrgPer.insert" type="button" id="btnoption" class="btn btn-success btn-sm" (click)="PostRecordArea()">
+
+        <i class="fas fa-plus"></i>
+        {{'AddNewRecord' | translate }}
+
+      </button>
+      &nbsp;&nbsp;
+      <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-info btn-sm" (click)="PutRecordArea()">
+
+        <i class="fas fa-edit"></i>
+
+        {{'Update' | translate }}
+
+      </button>
+
+    </div>
+    <hr>
+    <div class="form-row">
+      <ag-grid-angular #agGrid style="width: 100%; height: 450px;" class="ag-theme-alpine" [rowData]="rowData | async"
+        [columnDefs]="columnDefs" [enableRtl]="Rtl" animateRows [rowSelection]="rowSelection"
+        (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)" pagination>
+      </ag-grid-angular>
+    </div>
+    <br><br>
+  </ng-template>
+</div>

@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-6 col-sm-12 mb-3">
+        <div class="form-group"  >
+          <label for="GroupName" class="mb-1"> اسم المستخدمين </label>
+    
+          <select  
+            class="form-control " 
+            #GroupJob="ngModel" 
+            [(ngModel)]="id"
+            id="GroupName" 
+            name="GroupJob"  
+            (change)="JopGroupChanged()"
+          >
+          <option value="0"> اختيار</option>
+            <option *ngFor="let option of UserList" value={{option.id}}> {{option.userName}} </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <ag-grid-angular  
+      enableRtl=true
+      [enableColResize]="true"    
+      (gridReady)="onGridReady2($event)"
+      style="width:100%;height: 450px" class="ag-theme-alpine"
+      [rowData]="rowData2   " 
+      [rowSelection]="rowSelection2" 
+      animateRows 
+      [columnDefs]="columnDefs2" >
+    </ag-grid-angular>
+    
+    <div class="w-100 text-center mt-5">
+      <button class="btn btn-primary"
+      (click)="save()">حفظ</button>
+    </div>

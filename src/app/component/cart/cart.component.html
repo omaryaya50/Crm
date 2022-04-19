@@ -1,0 +1,26 @@
+<nav class="sidebar">
+  <div class="list-group">
+    <button type="button" class="btn btn-primary">{{'Menu'| translate}} <i class="fas fa-bars">&nbsp;&nbsp;</i></button>
+    <div class="nested-menu" *ngFor="let link of  getParentList(); let i = index" [attr.data-index]="i">
+      <a *ngIf="link.url==='' && link.parentID=='0'" class="btn btn-secondary dropdown-toggle"
+        (click)="addExpandClass(link.latinName)">
+        {{ link.latinName  | translate }}
+        <i class="fas fa-chevron-down"></i>
+      </a>
+
+      <!-- <a *ngIf="link.url!='' && link.parentID=='0'" class="btn btn-dark">
+        {{   link.latinName  | translate }}
+      </a> -->
+      <div [class.expand]="showMenu === link.latinName" class="nested">
+        <ul class="submenu">
+          <li *ngFor="let subprog of getchidList(link.progId)">
+            <a class="dropdown-item" *ngIf="subprog.url!=''" [routerLink]="subprog.url">
+              <i class="fas fa-pencil-alt fa-fw"></i>{{subprog.latinName| translate}}</a>
+            <a class="dropdown-item" *ngIf="subprog.url==''" [routerLink]="['/'+subprog.latinName, subprog.progId]">
+              <span class="fas fa-angle-double-down">&nbsp;&nbsp;</span>{{subprog.latinName| translate}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

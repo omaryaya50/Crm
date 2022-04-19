@@ -1,0 +1,97 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container">
+  <div class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Code' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Product Group' | translate }}
+    </a>
+  </div>
+</div>
+
+<div class="container my-3">
+  <button [hidden]="!_IPrgPer.insert" type="button" id="btnoption" class="btn btn-success btn-sm mx-3" (click)="Addnewrecord(template)">
+    <i class="fas fa-plus"></i>
+    {{'AddNewRecord' | translate }}
+  </button>
+  <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-info btn-sm" (click)="UpdateRecord(template)">
+    <i class="fas fa-edit"></i>
+    {{'Update' | translate }}
+  </button>
+</div>
+
+<ng-template #template>
+  <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle"> {{title | translate}}</h6>
+          <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #ProductGroup="ngForm" (ngSubmit)="onSubmit(ProductGroup)">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="productGroupName">
+                  <span class="badge badge-pill badge-light"
+                    [style.float]=" Rtl? 'right':'left'">{{'Name' | translate}}</span> </label>
+                <input #productGroupName="ngModel" type="text" name="productGroupName"
+                  [(ngModel)]="obProductGroup.obInProductGroup.productGroupName" class="form-control input-sm"
+                  id="productGroupName" placeholder="{{'Name' | translate}}" required>
+                <div class="text-danger "
+                  *ngIf="isSubmitted && productGroupName.invalid && productGroupName.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="productGroupLatName"> <span
+                    [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'LatName' | translate}}</span> </label>
+                <input #productGroupLatName="ngModel" type="text" class="form-control input-sm"
+                  name="productGroupLatName" id="productGroupLatName"
+                  [(ngModel)]="obProductGroup.obInProductGroup.productGroupLatName"
+                  placeholder="{{'LatName' | translate}}" required>
+                <div class="text-danger"
+                  *ngIf="isSubmitted && productGroupLatName.invalid && productGroupLatName.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col text-center">
+                <button  [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+                  <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                </button>
+                &nbsp;&nbsp;
+                <button type="button" class="btn btn-dark btn-sm" (click)="reset()">
+                  <span class="fas fa-undo"> &nbsp;&nbsp;</span> {{'Reset' | translate}}&nbsp;&nbsp;</button>
+                &nbsp;&nbsp;
+
+                <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-danger btn-sm"
+                  *ngIf="obProductGroup.obInProductGroup.productGroupId>0"
+                  (click)="Delete(obProductGroup.obInProductGroup.productGroupId)">
+                  <span class="fas fa-trash-alt">&nbsp;&nbsp;</span>{{'Delete' | translate}} &nbsp;&nbsp;</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>
+<hr>
+
+<div class="container">
+  <ag-grid-angular #agGrid style="width: 100%; height: 450px;" class="ag-theme-alpine" [rowData]="rowData | async"
+    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+    [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"
+    pagination>
+  </ag-grid-angular>
+</div>

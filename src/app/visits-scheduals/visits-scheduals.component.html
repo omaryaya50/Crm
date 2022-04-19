@@ -1,0 +1,80 @@
+<ng-template [ngIf]="enterymode==1">
+
+<div class="container my-3">
+    <div class="form-row" >
+      <!-- start Sales Representative -->
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Sales Representative' | translate}}</span> </label>
+        <select #salesRepId="ngModel" class="custom-select" [(ngModel)]="VisitSchedualServ.iVisitScheduals.salesRepId" name="salesRepId" id="salesRepId"
+          (ngModelChange)="onChangeSelectionCustomerBySalesID($event)">
+          <option></option>
+          <option *ngFor="let xsector of AllSales" value={{xsector.salesRepId}}>
+            {{xsector.salesRepName}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="salesbdaymonthRepId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            Month</span> </label>
+            <input type="month"  class="custom-select" id="bdaymonth" (ngModelChange)="onChangeSelectionMonth($event)" name="bdaymonth"[(ngModel)]="VisitSchedualServ.iVisitScheduals.datePeriod">
+
+      </div>
+
+
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+            class="btn btn-outline-info" (click)="ShowData()">
+            <i class="fa fa-eye" aria-hidden="true"></i> {{'Show Data' | translate }}
+          </button>
+        </div>
+      </div>
+        <div class="form-row my-5">
+        <div class=" col-md-6">
+          <button class="btn btn-success" data-style="zoom-in" (click)="onsubmit()">
+            <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+            &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+          </button>
+
+
+        </div>
+        <div class="col-md-6">
+          <button  type="button" id="btnoption" class="btn btn-info  " (click)="CancelSave()">
+            {{'CancelSave' | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="form-row" >
+        <ag-grid-angular #agGrid2 style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="rowData2 "
+          [columnDefs]="columnDefs2" [defaultColDef]="defaultColDef" animateRows [rowSelection]="rowSelection"
+          (gridReady)="onGridReady2($event)" pagination>
+        </ag-grid-angular>
+      </div>
+
+    </div>
+    </ng-template>
+
+    <ng-template [ngIf]="enterymode==0">
+
+      <div class="form-row my-3 container">
+        <!-- start Add New Record -->
+        <div class="form-group col-md-3">
+          <button  type="button" id="btnoption" class="btn btn-success" (click)="PostRecordArea()">
+            <i class="fas fa-plus"></i>
+            {{'AddNewRecord' | translate }}
+          </button>
+        </div>
+
+        <div class="form-row col-md-12 " >
+          <ag-grid-angular #agGrid2 style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="rowData | async"
+            [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" animateRows [rowSelection]="rowSelection"
+            (gridReady)="onGridReady($event)" (rowDoubleClicked)="onrowDoubleClicked($event)" pagination>
+          </ag-grid-angular>
+        </div>
+        </div>
+      </ng-template>
+

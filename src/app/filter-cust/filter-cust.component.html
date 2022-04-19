@@ -1,0 +1,119 @@
+<ngx-spinner></ngx-spinner>
+<div class="container">
+  <!-- <h2 class="h2 mt-3 mb-5">
+    {{'Customer' | translate }}
+  </h2> -->
+  <form class="mt-5">
+    <div class="row">
+      <!--start client code -->
+
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="customerId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Customer' | translate}}</span> </label>
+        <select #customerId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="CustomerID" name="customerId"
+          id="customerId" (ngModelChange)="onChangeSelectionByCustomer($event)">
+          <option></option>
+          <option *ngFor="let xsector of AllCustomers" value={{xsector.customerId}}>
+            {{xsector.customerName}}
+
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Sales Representative' | translate}}</span> </label>
+        <select #salesRepId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="SalesID" name="salesRepId"
+          id="salesRepId" (ngModelChange)="onChangeSelectionCustomerBySalesID($event)">
+          <option ></option>
+
+          <option *ngFor="let xsector of AllSales" value={{xsector.salesRepId}}>
+            {{xsector.salesRepName}}
+
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="territoryId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Territory' | translate}}</span> </label>
+        <select #territoryId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Tid" name="territoryId"
+          id="territoryId" (ngModelChange)="onChangeSelectionT($event)">
+          <option selected></option>
+
+          <option *ngFor="let xsector of Territory" value={{xsector.territoryId}}>
+            {{xsector.territoryName}}
+
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="sectorId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Sector' | translate}}</span> </label>
+        <select #sectorId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Sid" name="sectorId"
+          id="sectorId" (ngModelChange)="onChangeSelectionS($event)">
+          <option selected></option>
+
+          <option *ngFor="let xsector of Sector" value={{xsector.sectorId}}>
+            {{xsector.sectorName}}
+
+          </option>
+        </select>
+      </div>
+
+
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="governorateId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Governorate' | translate}}</span> </label>
+        <select #governorateId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Gid" name="governorateId"
+          id="governorateId" (ngModelChange)="onChangeSelectionG($event)">
+          <option selected></option>
+
+          <option *ngFor="let xsector of Governorate" value={{xsector.governorateId}}>
+            {{xsector.governorateName}}
+
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="regionId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Region' | translate}}</span> </label>
+        <select #regionId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Rid" name="regionId"
+          id="regionId" (ngModelChange)="onChangeSelectionR($event)">
+          <option selected></option>
+
+          <option *ngFor="let xsector of Region" value={{xsector.regionId}}>
+            {{xsector.regionName}}
+
+          </option>
+        </select>
+      </div>
+
+
+    </div>
+    <div class="container ">
+      <div class="row ">
+        <div class="btn-group mt-4">
+          <button type="submit" (click)="showdata()" class="btn btn-primary ml-1 ">Show data</button>
+          <button type="submit" (click)="ExportExcel()" class="btn btn-success ml-1 ">Export to excel</button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <div class="form-row mt-5">
+    <ag-grid-angular #agGrid style="width: 95%; height: 550px;"
+     class="ag-theme-alpine" [rowData]="rowData | async"
+    [columnDefs]="columnDefs"  [animateRows]="true" [paginationPageSize]="100"
+    [rowBuffer]="100" 
+    
+    [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
+     (gridReady)="onGridReady($event)"
+    pagination>
+  </ag-grid-angular>
+</div>

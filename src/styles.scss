@@ -1,0 +1,83 @@
+@import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+@import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-grids/styles/material.css';
+
+body {
+  overflow-x: hidden
+}
+
+.ag-theme-alpine {
+  @include ag-theme-alpine();
+}
+
+.toolbar {
+  color: black;
+}
+
+.tool {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
+  background-color: gainsboro;
+  padding: 5px;
+  border-radius: 15px;
+  margin-top: 1em;
+}
+
+.tool .btn-light {
+  background-color: unset;
+  border: none;
+}
+
+.form-control.input-sm {
+  height: 31px;
+}
+
+[dir="rtl"].fa-chevron-down {
+  margin-right: .5em;
+}
+
+[dir="rtl"].fa-chevron-down {
+  margin-left: .5em;
+}
+
+[dir="rtl"] .nested-menu .nested .submenu {
+  text-align: right;
+}
+
+[dir="ltr"] .nested-menu .nested .submenu {
+  text-align: left;
+}
+
+[dir="rtl"] .nested-menu .nested .submenu li i {
+  margin-left: .5em;
+}
+
+[dir="ltr"] .nested-menu .nested .submenu li i {
+  margin-right: .5em;
+}
+
+.badge-light {
+  background-color: unset;
+}
+
+.badge-pill {
+  color: #126e82;
+  font-size: 1rem;
+  padding: .3em .1em;
+  font-weight: normal;
+}
+
+.modal-title {
+  color: #126e82;
+  font-weight: 700;
+}

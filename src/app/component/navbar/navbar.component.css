@@ -1,0 +1,48 @@
+.navbar{
+  padding: 0;
+  margin: 0;
+}
+.navbar-collapse.collapse {
+  height: auto !important;
+  padding-bottom: 0;
+  overflow: visible !important;
+  visibility: visible !important;
+}
+
+.logo {
+  margin-left: 0px;
+  height: 45px;
+}
+
+.navbar {
+  padding: 0rem 0rem;
+  min-height: 4em;
+}
+
+.force-scroll {
+  overflow-y: scroll;
+  height: 200px;
+
+}
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 15px;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+  min-height: 24%;
+}

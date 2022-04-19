@@ -1,0 +1,201 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container">
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Code' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Sales Representative' | translate }}
+    </a>
+  </div>
+</div>
+
+<div class="container my-3">
+  <div class="form-row">
+    <button [hidden]="!_IPrgPer.insert" type="button" id="btnoption" class="btn btn-success btn-sm " (click)="Addnewrecord(template)">
+      <i class="fas fa-plus"></i> {{'AddNewRecord' | translate }}
+    </button>
+    <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-info btn-sm mx-3" (click)="UpdateRecord(template)">
+      <i class="fas fa-edit"></i> {{'Update' | translate }}
+    </button>
+  </div>
+</div>
+<div class="container my-4">
+  <hr>
+</div>
+<div class="container">
+<div class="form-row">
+  <ag-grid-angular #agGrid style="width: 100%; height: 450px;" class="ag-theme-alpine" [rowData]="rowData | async"
+    [columnDefs]="columnDefs" [enableRtl]="false" [animateRows]="true" [paginationPageSize]="100"
+    [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"
+    (rowDoubleClicked)="onrowDoubleClicked($event)" pagination>
+  </ag-grid-angular>
+</div>
+</div>
+
+<ng-template #template>
+  <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle">{{title | translate}}</h6>
+          <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #SalesRep="ngForm" (ngSubmit)="onSubmit(SalesRep)">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">{{'Sales ID' | translate}}</span>
+                </label>
+                <input #salesRepId="ngModel" type="number" data-dismiss="modal" class="form-control input-sm"
+                  [disabled]="!mode" name="salesRepId" id="salesRepId" [(ngModel)]="SerSalesRep.objSalesRep.salesRepId"
+                  placeholder="{{'salesRepId' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && salesRepId.invalid && salesRepId.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="salesRepName"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">{{'Name' | translate}}</span>
+                </label>
+                <input #name="ngModel" type="text" data-dismiss="modal" class="form-control input-sm"
+                  name="salesRepName" id="salesRepName" [(ngModel)]="SerSalesRep.objSalesRep.salesRepName"
+                  placeholder="{{'Name' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && name.invalid && name.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+
+                <label [style.float]="Rtl? 'right':'left'" for="salesRepLatName"><span
+                    [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">{{'LatName' |
+                    translate}}</span>
+                </label>
+                <input #name="ngModel" type="text" data-dismiss="modal" class="form-control input-sm"
+                  name="salesRepLatName" id="salesRepLatName" [(ngModel)]="SerSalesRep.objSalesRep.salesRepLatName"
+                  placeholder="{{'LatName' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && name.invalid && name.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="territoryId">
+                  <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'Territory' | translate}}</span>
+                </label>
+                <select #territoryId="ngModel" class="custom-select custom-select-sm"
+                  [(ngModel)]="SerSalesRep.objSalesRep.territoryId" name="territoryId" id="territoryId"
+                  (change)="onChangeSelectionT(territoryId.value)" required>
+                  <option *ngFor="let xgroup of Territorys" value={{xgroup.territoryId}}>
+                    {{xgroup.territoryName}}
+                  </option>
+                </select>
+                <div class="text-danger" *ngIf="isSubmitted && territoryId.invalid && territoryId.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="sectorId">
+                  <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'Sector' | translate}}</span>
+
+                </label>
+                <ng-multiselect-dropdown name="sectors" placeholder="{{'Sector' | translate}}"
+                  (onSelect)="onItemSelect4($event)" (onDeSelect)="onItemSelect4($event)"
+                  (onSelectAll)="onItemSelect4($event)" [settings]="dropdownSettings2" [data]="sectors"
+                  [(ngModel)]="SalesSectors">
+                </ng-multiselect-dropdown>
+                <div class="text-danger" *ngIf="SalesSectors.length==0">
+                  <small>{{'*required' | translate}}</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="governorateId">
+                  <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'Governorate' | translate}}</span>
+                </label>
+
+                <ng-multiselect-dropdown name="governorate" placeholder="{{'governorateId' | translate}}"
+                  [settings]="dropdownSettings3" [data]="governorate" (onSelect)="ongovernoratelistSelect($event)"
+                  (onSelectAll)="ongovernoratelistSelect($event)" (onDeSelect)="ongovernoratelistSelect($event)"
+                  [(ngModel)]="objSalesGovernorateService.SalesGovernorateList">
+                </ng-multiselect-dropdown>
+                <div class="text-danger" *ngIf="objSalesGovernorateService.SalesGovernorateList.length==0">
+                  <small>{{'*required' | translate}}</small>
+                </div>
+
+
+              </div>
+
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="regionId">
+                  <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'Region' | translate}}</span>
+                </label>
+                <ng-multiselect-dropdown name="regions" placeholder="{{'Region' | translate}}"
+                  [settings]="dropdownSettings" [data]="regions" [(ngModel)]="SalesRegions"
+                  (onSelect)="onItemSelect($event)">
+                </ng-multiselect-dropdown>
+                <div class="text-danger" *ngIf=" SalesRegions.length==0">
+                  <small>{{'*required' | translate}}</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="userId">
+                  <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'Users' | translate}}</span>
+                </label>
+                <select #userId="ngModel" class="custom-select custom-select-sm"
+                  [(ngModel)]="SerSalesRep.objSalesRep.userId" name="userId" id="userId"
+                  (change)="onChangeSelectionU(userId.value)" required>
+                  <option *ngFor="let xgroup of Users" value={{xgroup.id}}>
+                    {{xgroup.name}}
+                  </option>
+                </select>
+              </div>
+
+            </div><!--form row-->
+
+
+
+
+
+
+            <div class="form-row">
+              <div class="col text-center">
+                <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+                  <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                </button>
+                &nbsp;&nbsp;
+                <button type="button" class="btn btn-dark btn-sm" (click)="reset()">
+                  <span class="fas fa-undo"> &nbsp;&nbsp;</span> {{'Reset' | translate}}&nbsp;&nbsp;</button>
+                &nbsp;&nbsp;
+
+                <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-danger btn-sm" *ngIf="SerSalesRep.objSalesRep.salesRepId>0"
+                  (click)="Delete(SerSalesRep.objSalesRep.salesRepId)">
+                  <span class="fas fa-trash-alt">&nbsp;&nbsp;</span>{{'Delete' | translate}} &nbsp;&nbsp;</button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                </div>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,201 @@
+<ngx-spinner></ngx-spinner>
+<div class="container">
+  <!-- <h2 class="h2 mt-3 mb-5">
+    {{'Customer' | translate }}
+  </h2> -->
+  <form class="mt-5">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label [style.float]="Rtl? 'right':'left'" for="fromDate"><span [style.float]="Rtl? 'right':'left'"
+                class="badge badge-pill badge-light">
+                {{'From Date' | translate}}</span>
+            </label>
+      
+            <input #fromDate="ngModel" type="date" name="fromDate" [(ngModel)]="FromDate" class="form-control" id="fromDate">
+          </div>
+          <!--End From Date -->
+          <!-- start To Date -->
+          <div class="form-group col-md-6">
+            <label [style.float]="Rtl? 'right':'left'" for="toDate"><span [style.float]="Rtl? 'right':'left'"
+                class="badge badge-pill badge-light">
+                {{'To Date' | translate}}</span> </label>
+      
+            <input #toDate="ngModel" type="date" name="toDate" [(ngModel)]="ToDate" class="form-control" id="toDate">
+          </div>
+    </div>
+    <div class="row">
+      <!--start client code -->
+
+   
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Sales Representative' | translate}}</span> </label>
+        <select #salesRepId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="SalesID" name="salesRepId"
+          id="salesRepId" (ngModelChange)="onChangeSelectionCustomerBySalesID($event)">
+          <option ></option>
+
+          <option *ngFor="let xsector of AllSales" value={{xsector.salesRepId}}>
+            {{xsector.salesRepName}}
+
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="territoryId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Territory' | translate}}</span> </label>
+        <select #territoryId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Tid" name="territoryId"
+          id="territoryId" (change)="onChangeSelectionT(territoryId.value)">
+          <option value="0"></option>
+
+          <option *ngFor="let xsector of Territory" value={{xsector.territoryId}}>
+            {{xsector.territoryName}}
+
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="sectorId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Sector' | translate}}</span> </label>
+        <select #sectorId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Sid" name="sectorId"
+          id="sectorId"  (change)="onChangeSelectionS(sectorId.value)">
+          <option value="0"></option>
+
+          <option *ngFor="let xsector of Sector" value={{xsector.sectorId}}>
+            {{xsector.sectorName}}
+
+          </option>
+        </select>
+      </div>
+
+
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="governorateId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Governorate' | translate}}</span> </label>
+        <select #governorateId="ngModel" class="custom-select custom-select-sm"
+         [(ngModel)]="Gid" name="governorateId"
+          id="governorateId" (change)="onChangeSelectionG(governorateId.value)">
+          <option value="0"></option>
+
+          <option *ngFor="let xsector of Governorate" value={{xsector.governorateId}}>
+            {{xsector.governorateName}}
+
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="regionId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Region' | translate}}</span> </label>
+        <select #regionId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Rid" name="regionId"
+          id="regionId" (change)="onChangeSelectionR(regionId.value)">
+          <option value="0"></option>
+
+          <option *ngFor="let xsector of Region" value={{xsector.regionId}}>
+            {{xsector.regionName}}
+
+          </option>
+        </select>
+      </div>
+
+
+    </div>
+    <div class="container ">
+      <div class="row ">
+        <div class="btn-group mt-4">
+          <button type="submit" (click)="showdata()" class="btn btn-primary ml-1 ">Show data</button>
+         
+        </div>
+      </div>
+    </div>
+  <br>
+  <div class="container ">
+    <div class="row ">
+      <div class="btn-group mt-4">
+      
+        <label [style.float]="Rtl? 'right':'left'" for="regionId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+         اجمالى عدد العملاء</span> </label>
+       
+        <label [style.float]="Rtl? 'right':'left'" for="regionId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+        {{Tname}} -- {{this.Sname}}--{{ this.Gname}}--{{this.Rname}}</span> </label>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="container ">
+    <div class="row ">
+      <div class="btn-group mt-4">
+      
+        <label [style.float]="Rtl? 'right':'left'" for="regionId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+        {{noofcusts}}</span> </label>
+        
+      </div>
+    </div>
+  </div>
+  <div class="container ">
+    <div class="row ">
+      <div class="btn-group mt-4">
+        Class A: blue
+        ,
+        Class B: red , Class C:green , Class D:yellow
+        </div>
+        </div>
+  </div>
+  
+
+
+            <agm-map [latitude]="latitude" [longitude]="longitude" 
+            (mapReady)="mapReady($event)"
+            (centerChange)="centerChange($event)" 
+          
+        [zoom]="mapZoom"
+        [mapTypeControl]="true" 
+            (mapClick)="mapClicked($event)"
+            >
+         
+                <agm-marker 
+                *ngFor="let m of obserCustomer.CustomerListMap; let i = index"
+                [iconUrl]="m.icon"
+                [latitude]="m.xCoordinte"
+                [longitude]="m.yCoordinte"
+                [label]="m.CustomerName"
+                (markerClick)="clickedMarker(m.xCoordinte,m.yCoordinte)"
+               [title]="m.mapInfo"
+                
+               
+              >
+              <agm-info-window>
+
+                <div>
+                    {{m.customerName}}
+               
+                    
+                </div>
+                <div>
+                  {{m.custClassName}}
+                    <!-- <a (click)="onClickInfoView({id:m.id})" class="btn btn-attention pull-right">Daje <i class="fa fa-angle-double-right"></i></a> -->
+                </div>
+    
+            </agm-info-window>
+           
+              
+            </agm-marker>
+
+              </agm-map>
+      <br><br><br>
+  
+  </form>
+  
+
+
+
+   
+  

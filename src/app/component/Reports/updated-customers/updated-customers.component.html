@@ -1,0 +1,102 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container">
+  <div class="form-row" class="tool">
+
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">
+      <span class="fas fa-home "> </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Reports' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Updated Customers' | translate }}
+    </a>
+  </div>
+</div>
+
+<br>
+
+
+<div class="container">
+<div class="form-row">
+    <div class="form-group col-md-4">
+      <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Sales Representative' | translate}}</span> </label>
+      <select #salesRepId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="SalesID" name="salesRepId"
+        id="salesRepId" (ngModelChange)="onChangeSelectionCustomerBySalesID($event)">
+        <option *ngFor="let xsector of AllSales" value={{xsector.salesRepId}}>
+          {{xsector.salesRepName}}
+
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label [style.float]="Rtl? 'right':'left'" for="fromDate"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'From Date' | translate}}</span> </label>
+
+      <input #fromDate="ngModel" type="date" name="fromDate" [(ngModel)]="FromDate" class="form-control input-sm"
+        id="fromDate">
+    </div>
+
+    <div class="form-group col-md-4">
+      <label [style.float]="Rtl? 'right':'left'" for="toDate"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'To Date' | translate}}</span> </label>
+
+      <input #toDate="ngModel" type="date" name="toDate" [(ngModel)]="ToDate" class="form-control input-sm" id="toDate">
+    </div>
+
+  </div>
+</div>
+
+<div class="container">
+<div class="form-row ">
+    <div class="form-group m-auto">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+        class="btn btn-outline-info" (click)="Filter()">
+        <i class="fa fa-eye" aria-hidden="true"></i> {{'Show Data' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container my-4">
+
+    <hr>
+
+</div>
+<div class="container">
+
+  <div class="form-row report">
+    <div class="form-group col-md-3">
+      <label [style.float]="Rtl? 'right':'left'" for="ReportName"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Report Name' | translate}}</span> </label>
+      <input type="text" [(ngModel)]="ReportName" class="form-control input-sm"
+        placeholder="{{'Report Name' | translate}}">
+
+
+    </div>
+
+    <div class="form-group col-md-6">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+        class="btn btn-outline-success btn-sm" (click)="ExportExcel(FilteredList)">
+
+        <i class="fa fa-arrow-down"></i>
+        {{'Export To Excel' | translate }}
+
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="form-row">
+    <ag-grid-angular #agGrid style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="rowData | async"
+      [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" animateRows [rowSelection]="rowSelection"
+      (gridReady)="onGridReady($event)" pagination>
+    </ag-grid-angular>
+  </div>
+</div>

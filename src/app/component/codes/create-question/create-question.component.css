@@ -1,0 +1,6 @@
+.form-row{
+    align-items: flex-end;
+}
+.form-row  button{
+    margin-right: .5em;
+}

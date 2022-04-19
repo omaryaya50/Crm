@@ -1,0 +1,70 @@
+<ngx-spinner></ngx-spinner>
+<div class="container my-3">
+    <div class="form-row" *ngIf="!ViewReport">
+      <!-- start Sales Representative -->
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Sales Representative' | translate}}</span> </label>
+        <select #salesRepId="ngModel" class="custom-select" [(ngModel)]="SalesID" name="salesRepId" id="salesRepId"
+          (ngModelChange)="onChangeSelectionCustomerBySalesID($event)">
+          <option></option>
+          <option *ngFor="let xsector of AllSales" value={{xsector.salesRepId}}>
+            {{xsector.salesRepName}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="customerId"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Customer' | translate}}</span> </label>
+        <select #customerId="ngModel" class="custom-select" [(ngModel)]="CustomerID" name="customerId" id="customerId"
+          (ngModelChange)="onChangeSelectionByCustomer($event)">
+          <option *ngFor="let xsector of AllCustomers" value={{xsector.customerId}}>
+            {{xsector.customerName}}
+          </option>
+        </select>
+      </div>
+       <!--start From Date -->
+    <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="fromDate"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'From Date' | translate}}</span>
+        </label>
+  
+        <input #fromDate="ngModel" type="date" name="fromDate" [(ngModel)]="FromDate" class="form-control" id="fromDate">
+      </div>
+      <!--End From Date -->
+      <!-- start To Date -->
+      <div class="form-group col-md-6">
+        <label [style.float]="Rtl? 'right':'left'" for="toDate"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'To Date' | translate}}</span> </label>
+  
+        <input #toDate="ngModel" type="date" name="toDate" [(ngModel)]="ToDate" class="form-control" id="toDate">
+      </div>
+      <!-- End To Date -->
+  
+    </div>
+    <!--.form-row-->
+  </div>
+  <!--.container-->
+  <div class="container">
+    <div class="from-row mt-3" style="margin-left: 30%;" *ngIf="!ViewReport">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption" class="btn btn-outline-info"
+        (click)="Filter()">
+        <i class="fa fa-filter" aria-hidden="true"></i> {{'Filter' | translate }}
+      </button>
+      
+    
+    </div>
+    </div>
+    <div class="container">
+
+        <ag-grid-angular #agGrid style="width: auto; height: 400px;" class="ag-theme-alpine" [rowData]="rowData | async"
+        [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+        [rowSelection]="rowSelection" (gridReady)="onGridReady($event)" [frameworkComponents]="frameworkComponents"
+        pagination>
+      </ag-grid-angular>
+    </div>
+   

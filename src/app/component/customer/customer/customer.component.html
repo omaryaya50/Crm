@@ -1,0 +1,707 @@
+<ngx-spinner></ngx-spinner>
+<div class="container">
+
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Customers' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Customer' | translate }}
+    </a>
+  </div>
+</div>
+
+<ng-template [ngIf]="enterymode==1">
+  <form #Customer="ngForm" (ngSubmit)="onSubmit(Customer)">
+
+    <h3 style="justify-content: center; justify-items: center; text-align: center;">
+      {{'Customer Screen' | translate}}
+    </h3>
+
+    <fieldset [dir]="Rtl? 'right':'left'">
+      <legend>
+        <button type="button" class="btn btn-info" (click)="CustomerData()">
+          {{'Customer Data' | translate}}
+          <i class="fas fa-angle-double-down"></i>
+        </button>
+      </legend>
+
+    </fieldset>
+
+    <div *ngIf="showCustomerData">
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="customerId"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'Customer ID' | translate}}</span> </label>
+
+          <input #customerId="ngModel" type="text" name="customerId" [(ngModel)]="obserCustomer.obIcustomer.customerId"
+            class="form-control input-sm" id="customerId" placeholder="{{'Customer ID' | translate}}" required readonly>
+        </div>
+      <!--   <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="CreateDateAndTime"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'DateCareation' | translate}}</span> </label>
+
+          <input #CreateDateAndTime="ngModel" type="text" name="date" [(ngModel)]="obserCustomer.obIcustomer.dateAndTime"
+            class="form-control input-sm" value="{{obserCustomer.obIcustomer.CreateDateAndTime | date:'yyyy-MM-dd'}}
+            " id="CreateDateAndTime" placeholder="{{'DateCareation' | translate}}" required readonly>
+        </div> -->
+
+
+
+
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="companyName"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'companyName' | translate}}</span> </label>
+
+          <input #companyName="ngModel" type="text" name="companyName"
+            [(ngModel)]="obserCustomer.obIcustomer.companyName" class="form-control input-sm" id="companyName"
+            placeholder="{{'companyName' | translate}}" required>
+          <div class="text-danger" *ngIf="isSubmitted && companyName.invalid && companyName.errors?.required ">
+            <small>{{'required' | translate}}</small>
+
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="companyLatName"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">{{'companyLatName' | translate}}</span>
+          </label>
+          <input #companyLatName="ngModel" type="text" data-dismiss="modal" class="form-control input-sm"
+            name="companyLatName" id="companyLatName" [(ngModel)]="obserCustomer.obIcustomer.companyLatName"
+            placeholder="{{'companyLatName' | translate}}" required>
+          <div class="text-danger" *ngIf="isSubmitted && companyLatName.invalid && companyLatName.errors?.required ">
+            <small>{{'required' | translate}}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="customerName"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'customerName' | translate}}</span> </label>
+
+          <input #customerName="ngModel" type="text" name="customerName"
+            [(ngModel)]="obserCustomer.obIcustomer.customerName" class="form-control input-sm" id="customerName"
+            placeholder="{{'customerName' | translate}}" required>
+          <div class="text-danger" *ngIf="isSubmitted && customerName.invalid && customerName.errors?.required ">
+            <small>{{'required' | translate}}</small>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="customerLatName"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">{{'customerLatName' | translate}}</span>
+          </label>
+          <input #customerLatName="ngModel" type="text" data-dismiss="modal" class="form-control input-sm"
+            name="customerLatName" id="customerLatName" [(ngModel)]="obserCustomer.obIcustomer.customerLatName"
+            placeholder="{{'customerLatName' | translate}}" required>
+          <div class="text-danger" *ngIf="isSubmitted && customerLatName.invalid && customerLatName.errors?.required ">
+            <small>{{'required' | translate}}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="phone"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'Phone' | translate}}</span> </label>
+
+          <input #phone="ngModel" type="text" name="phone" [(ngModel)]="obserCustomer.obIcustomer.phone"
+            class="form-control input-sm" id="phone" placeholder="{{'Phone' | translate}}">
+
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="custClassId"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'custClassId' | translate}}</span> </label>
+          <select #custClassId="ngModel" class="custom-select custom-select-sm"
+            [(ngModel)]="obserCustomer.obIcustomer.custClassId" name="custClassId" id="custClassId"
+            (ngModelChange)="onChangeSelectioncustClassId($event)" required>
+            <option> select an cust Class </option>
+            <option *ngFor="let xcustClass of custClass" value={{xcustClass.custClassId}}>
+              {{xcustClass.cclLatName}}
+            </option>
+          </select>
+          <div class="text-danger" *ngIf="isSubmitted && custClassId.invalid && custClassId.errors?.required ">
+            <small>{{'required' | translate}}</small>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="foxNo"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'foxNo' | translate}}</span> </label>
+
+          <input #foxNo="ngModel" type="text" name="foxNo" [(ngModel)]="obserCustomer.obIcustomer.foxNo"
+            class="form-control input-sm" id="foxNo" placeholder="{{'foxNo' | translate}}">
+
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="contactName"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'contactName' | translate}}</span>
+          </label>
+          <input #contactName="ngModel" type="text" data-dismiss="modal" class="form-control input-sm"
+            name="contactName" id="contactName" [(ngModel)]="obserCustomer.obIcustomer.contactName"
+            placeholder="{{'contactName' | translate}}">
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="mobile"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'mobile' | translate}}</span> </label>
+
+          <input #mobile="ngModel" type="text" name="mobile" [(ngModel)]="obserCustomer.obIcustomer.mobile"
+            class="form-control input-sm" id="mobile" placeholder="{{'mobile' | translate}}">
+
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="facebook"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'facebook' | translate}}</span>
+          </label>
+          <input #facebook="ngModel" type="text" data-dismiss="modal" class="form-control input-sm" name="facebook"
+            id="facebook" [(ngModel)]="obserCustomer.obIcustomer.facebook" placeholder="{{'facebook' | translate}}">
+
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="email"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'E-Mail' | translate}}</span> </label>
+
+          <input #email="ngModel" type="email" name="email" [(ngModel)]="obserCustomer.obIcustomer.email"
+            class="form-control input-sm" id="email" placeholder="{{'E-Mail' | translate}}">
+
+        </div>
+
+      </div>
+    </div>
+    <fieldset [dir]="Rtl? 'right':'left'">
+      <legend><button type="button" class="btn btn-info" (click)="CustomerAdress()">
+
+          {{'Customer Adress' | translate}}
+          <span class="fas fa-angle-double-down">&nbsp;&nbsp;</span>
+        </button></legend>
+    </fieldset>
+    <hr>
+    <div *ngIf="showCustomerAdress">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="territoryId"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'Territory' | translate}}</span> </label>
+          <select #territoryId="ngModel" class="custom-select custom-select-sm"
+            [(ngModel)]="obserCustomer.obIcustomer.territoryId" name="territoryId" id="territoryId"
+            (change)="onChangeSelectionterritory(territoryId.value)">
+            <option *ngFor="let xTerritory of Territorys" value={{xTerritory.territoryId}}>
+              {{xTerritory.territoryLatName}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="sectorId"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'Sector' | translate}}</span> </label>
+          <select #sectorId="ngModel" class="custom-select custom-select-sm"
+            [(ngModel)]="obserCustomer.obIcustomer.sectorId" name="sectorId" id="sectorId"
+            (change)="onChangeSelectionSector(sectorId.value)">
+            <option *ngFor="let xsector of sectors" value={{xsector.sectorId}}>
+              {{xsector.sectorLatName}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="governorateId"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'governorateId' | translate}}</span> </label>
+          <select #governorateId="ngModel" class="custom-select custom-select-sm"
+            [(ngModel)]="obserCustomer.obIcustomer.governorateId" name="governorateId" id="governorateId"
+            (change)="onChangeSelectionxgovernorate(governorateId.value)">
+            <option *ngFor="let xgovernorate of governorates" value={{xgovernorate.governorateId}}>
+              {{xgovernorate.governorateLatName}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="regionId"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'regionId' | translate}}</span> </label>
+          <select #regionId="ngModel" class="custom-select custom-select-sm"
+            [(ngModel)]="obserCustomer.obIcustomer.regionId" name="regionId" id="regionId"
+            (ngModelChange)="onChangeSelectionregion($event)">
+            <option *ngFor="let xregion of regions" value={{xregion.regionId}}>
+              {{xregion.regionLatName}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="adress"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'adress' | translate}}</span> </label>
+
+          <textarea rows="3" #adress="ngModel" type="text" name="adress" [(ngModel)]="obserCustomer.obIcustomer.adress"
+            class="form-control input-sm" id="adress" placeholder="{{'adress' | translate}}">
+                      </textarea>
+
+        </div>
+        <div class="form-group col-md-6" *ngIf=this.Admin>
+          <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'Sales Representative' | translate}}</span> </label>
+          <select #salesRepId="ngModel" class="custom-select custom-select-sm"
+            [(ngModel)]="obserCustomer.obIcustomer.salesRepId" name="salesRepId" id="salesRepId"
+            (ngModelChange)="onChangeSelectionSaleRep($event)">
+            <option *ngFor="let xsector of salesRep" value={{xsector.salesRepId}}>
+              {{xsector.salesRepLatName}}
+            </option>
+          </select>
+        </div>
+
+      </div>
+      <hr>
+      <div class="row">
+
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="CustomerSalesField"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'SalesField' | translate}}</span> </label>
+
+          <ng-multiselect-dropdown name="SalesField" placeholder="{{'SalesField' | translate}}"
+            [settings]="dropdownSettings" [data]="ItemsSalesField"
+            [(ngModel)]="obserCustomerSalesFieldService.obICustomerSalesField"
+            (onSelect)="onItemsSalesFieldSelect($event)" (onSelectAll)="onItemsSalesFieldSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <label style="margin-top: 10px;" [style.float]="Rtl? 'right':'left'" for="salesFieldNotes"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'Sales Field Notes' | translate}}</span> </label>
+
+          <input #salesFieldNotes="ngModel" type="text" name="salesFieldNotes"
+            [(ngModel)]="obserCustomer.obIcustomer.salesFieldNotes" class="form-control input-sm" id="salesFieldNotes"
+            placeholder="{{'Sales Field Notes' | translate}}">
+
+        </div>
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="ProductGroup"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'ProductGroup' | translate}}</span> </label>
+
+          <ng-multiselect-dropdown name="ProductGroup" placeholder="{{'ProductGroup' | translate}}"
+            [settings]="ProductGroupSettings" [data]="ItemsProductGroup"
+            [(ngModel)]="obserCustomerProductGroupservice.obICustomerProductGroup"
+            (onSelect)="onItemsProductGroupSelect($event)" (onSelectAll)="onItemsProductGroupSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <label style="margin-top: 10px;" [style.float]="Rtl? 'right':'left'" for="productGroupNotes"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'productGroupNotes' | translate}}</span> </label>
+
+          <input #productGroupNotes="ngModel" type="text" name="productGroupNotes"
+            [(ngModel)]="obserCustomer.obIcustomer.productGroupNotes" class="form-control input-sm"
+            id="productGroupNotes" placeholder="{{'productGroupNotes' | translate}}">
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label [style.float]="Rtl? 'right':'left'" for="CompetitionCompanies"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'CompetitionCompanies' | translate}}</span> </label>
+
+          <ng-multiselect-dropdown name="CompetitionCompanies" placeholder="{{'CompetitionCompanies' | translate}}"
+            [settings]="CompetitionCompaniesSettings" [data]="ItemsCompetitionCompanies"
+            [(ngModel)]="obserCustomerCompetitionCompaniespservice.obICustomerCompetition"
+            (onSelect)="onItemsCompetitionCompaniesSelect($event)"
+            (onSelectAll)="onItemsCompetitionCompaniesSelectAll($event)"> </ng-multiselect-dropdown>
+          <label style="margin-top: 10px;" [style.float]="Rtl? 'right':'left'" for="competitionNotes"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'competitionNotes' | translate}}</span> </label>
+
+          <input #competitionNotes="ngModel" type="text" name="competitionNotes"
+            [(ngModel)]="obserCustomer.obIcustomer.competitionNotes" class="form-control input-sm" id="competitionNotes"
+            placeholder="{{'competitionNotes' | translate}}">
+
+        </div>
+
+
+      </div>
+    </div>
+    <fieldset [dir]="Rtl? 'right':'left'">
+      <legend>{{'Customer Notes' | translate}}</legend>
+    </fieldset>
+    <hr>
+    <div class="form-row">
+
+      <div>   
+        <button  type="button" class="btn btn-outline-success btn-sm" (click)="insertFooterRow(template)">
+          {{'AddnewRow' | translate}}</button>
+        <button  type="button" id="btnoption" class="btn btn-outline-info btn-sm" (click)="UpdateFooterRow(template)">
+          <i class="fas fa-edit"></i><small> {{'Updaterow' | translate }}</small>
+
+        </button>&nbsp;&nbsp;
+        <button  type="button" class="btn btn-outline-danger btn-sm" (click)="deleteSelectedRows()">
+          <small> {{'deleteRow' | translate}}</small>
+        </button>
+        <br>
+      </div>
+      <ng-template #template>
+        <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLongTitle">{{title | translate}}</h6>
+                <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form #CustomerNoteTypes="ngForm" (ngSubmit)="onSubmitCustomerNoteTypes(CustomerNoteTypes)">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label [style.float]="Rtl? 'right':'left'" for="noteTypesDeception"><span
+                          [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                          {{'Note Types Deception' | translate}}</span> </label>
+                      <input #noteTypesDeception="ngModel" type="text" name="regionrName"
+                        [(ngModel)]="obserCustomerNoteTypesService.oboneCustomerNoteTypes.noteTypesDeception"
+                        class="form-control input-sm" id="noteTypesDeception"
+                        placeholder="{{'Note Types Deception' | translate}}" required>
+                      <div class="text-danger"
+                        *ngIf="isSubmitted && noteTypesDeception.invalid && noteTypesDeception.errors?.required ">
+                        <small>{{'required' | translate}}</small>
+                      </div>
+
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label [style.float]="Rtl? 'right':'left'" for="noteTypesId"><span
+                          [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                          {{'Note Type' | translate}}</span> </label>
+                      <select #noteTypesId="ngModel" class="custom-select custom-select-sm"
+                        [(ngModel)]="obserCustomerNoteTypesService.oboneCustomerNoteTypes.noteTypesId"
+                        name="noteTypesId" id="noteTypesId" (ngModelChange)="onChangeSelectionnoteTypes($event)"
+                        required>
+                        <option *ngFor="let xnoteTypes of noteTypesselect" value={{xnoteTypes.noteTypeId}}>
+                          {{xnoteTypes.noteTypeLatName}}
+                        </option>
+                      </select>
+                      <div class="text-danger"
+                        *ngIf="isSubmitted && noteTypesId.invalid && noteTypesId.errors?.required ">
+                        <small>{{'required' | translate}}</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label [style.float]="Rtl? 'right':'left'" for="trxDate">
+                        <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                          {{'Trx Date' | translate}}</span>
+                      </label>
+                      <input #trxDate="ngModel" type="text" class="form-control input-sm" name="trxDate" id="trxDate"
+                        [(ngModel)]="obserCustomerNoteTypesService.oboneCustomerNoteTypes.trxDate"
+                        placeholder="{{'Trx Date' | translate}}" required>
+                      <div class="text-danger" *ngIf="isSubmitted && trxDate.invalid && trxDate.errors?.required ">
+                        <small>{{'required' | translate}}</small>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-row">
+                    <div class="col text-center">
+                      <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+                        <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                        &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                      </button>
+
+                    </div>
+                  </div>
+                </form>
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </ng-template>
+
+
+
+
+      <ag-grid-angular #agGridinsert style="width: 100%; height: 150px;" class="ag-theme-alpine"
+        [rowData]="rowDatainsert | async" [columnDefs]="columnDefsinsert" [enableRtl]="Rtl"
+        (gridReady)="onGridReadyinsert($event)" animateRows [rowSelection]="rowSelection"
+        [enableCharts]="enableCharts"
+        [enableRangeSelection]="enableRangeSelection"
+        [pivotMode]="true"
+        [sideBar]="true"
+        (selectionChanged)="onSelectionChangedinsert($event)">
+      </ag-grid-angular>
+    </div>
+
+    <fieldset [dir]="Rtl? 'right':'left'">
+      <legend> {{'Withdrawals'| translate}}</legend>
+    </fieldset>
+    <hr>
+
+    <div class="form-row">
+
+      <div>
+        <button [hidden]="!_IPrgPer.insert" type="button" class="btn btn-outline-success btn-sm"
+          (click)="insertFooterRowCustomerProductGroupPerYear(templateCustomerProductGroupPerYear)">
+          {{'AddnewRow' | translate}}</button>
+        &nbsp;&nbsp;
+        <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-outline-info btn-sm"
+          (click)="UpdateFooterRowCustomerProductGroupPerYear(templateCustomerProductGroupPerYear)">
+          <i class="fas fa-edit"></i><small> {{'Updaterow' | translate }}</small>
+
+        </button>&nbsp;&nbsp;
+        <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-outline-danger btn-sm"
+          (click)="deleteSelectedRowsCustomerProductGroupPerYear()">
+          <small> {{'deleteRow' | translate}}</small>
+        </button>
+        <br>
+      </div>
+      <ng-template #templateCustomerProductGroupPerYear>
+        <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLongTitle">{{title| translate}}</h6>
+                <button type="button" class="close" (click)="hideCustomerProductGroupPerYear()" data-dismiss="modal"
+                  aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form #CustomerProductGroupPerYear="ngForm"
+                  (ngSubmit)="onSubmitCustomerProductGroupPerYear(CustomerProductGroupPerYear)">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label [style.float]="Rtl? 'right':'left'" for="productGroupId"><span
+                          [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                          {{'ProductGroup' | translate}}</span> </label>
+                      <select #productGroupId="ngModel" class="custom-select custom-select-sm"
+                        [(ngModel)]="obserCustomerProductGroupPerYearService.oboneCustomerProductGroupPerYear.productGroupId"
+                        name="productGroupId" id="productGroupId"
+                        (ngModelChange)="onChangeSelectionCustomerProductGroupPerYear($event)" required>
+                        <option *ngFor="let xItemsProductGroup of ItemsProductGroup"
+                          value={{xItemsProductGroup.productGroupId}}>
+                          {{xItemsProductGroup.productGroupLatName}}
+                        </option>
+                      </select>
+                      <div class="text-danger"
+                        *ngIf="isSubmittedCustomerProductGroupPerYear && productGroupId.invalid && productGroupId.errors?.required ">
+                        <small>{{'required' | translate}}</small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label [style.float]="Rtl? 'right':'left'" for="year"><span [style.float]="Rtl? 'right':'left'"
+                          class="badge badge-pill badge-light">
+                          {{'Year' | translate}}</span> </label>
+                      <select #year="ngModel" class="custom-select custom-select-sm"
+                        [(ngModel)]="obserCustomerProductGroupPerYearService.oboneCustomerProductGroupPerYear.year"
+                        name="year" id="year" (ngModelChange)="onChangeSelectionyear($event)" required>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
+                        <option value="2014">2014</option>
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+                        <option value="2010">2010</option>
+                        <option value="2009">2009</option>
+                        <option value="2008">2008</option>
+                        <option value="2007">2007</option>
+                        <option value="2006">2006</option>
+                        <option value="2005">2005</option>
+                        <option value="2004">2004</option>
+                        <option value="2003">2003</option>
+                        <option value="2002">2002</option>
+                        <option value="2001">2001</option>
+                        <option value="2000">2000</option>
+
+                      </select>
+                      <div class="text-danger"
+                        *ngIf="isSubmittedCustomerProductGroupPerYear && year.invalid && year.errors?.required ">
+                        <small>{{'required' | translate}}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label [style.float]="Rtl? 'right':'left'" for="amount"><span [style.float]="Rtl? 'right':'left'"
+                          class="badge badge-pill badge-light">
+                          {{'Amount' | translate}}</span> </label>
+
+                      <input #amount="ngModel" type="number" name="amount"
+                        [(ngModel)]="obserCustomerProductGroupPerYearService.oboneCustomerProductGroupPerYear.amount"
+                        class="form-control input-sm" id="amount" placeholder="{{'Amount' | translate}}" required
+                        min="1">
+                      <div class="text-danger"
+                        *ngIf="isSubmittedCustomerProductGroupPerYear && amount.invalid && amount.errors?.required ">
+                        <small>{{'required' | translate}}</small>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="form-row">
+                    <div class="col text-center">
+                      <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+                        <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                        &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                      </button>
+
+                    </div>
+                  </div>
+                </form>
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </ng-template>
+
+
+      <ag-grid-angular #agGridinsertCustomerProductGroupPerYear style="width: 100%; height: 150px;"
+        class="ag-theme-alpine" [rowData]="rowDatainsertCustomerProductGroupPerYear | async"
+        [columnDefs]="columnDefsinsertCustomerProductGroupPerYear" [enableRtl]="Rtl"
+        (gridReady)="onGridReadyinsertCustomerProductGroupPerYear($event)" animateRows
+        [rowSelection]="rowSelectionCustomerProductGroupPerYear"
+        (selectionChanged)="onSelectionChangedinsertCustomerProductGroupPerYear($event)">
+      </ag-grid-angular>
+    </div>
+    <br>
+
+
+    <div class="form-row" *ngIf="obserCustomer.obIcustomer.customerId!=0">
+
+
+      <div class="form-group col-md-8">
+
+        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="20" [mapTypeControl]="true" [scrollwheel]="null">
+          <agm-marker [latitude]="latitude" [longitude]="longitude" [label]="obserCustomer.obIcustomer.companyName">
+          </agm-marker>
+        </agm-map>
+      </div>
+
+    </div>
+
+    <div class="container" style="margin-top: 20px;">
+
+      <div class="row">
+        <div class="col text-center">
+          <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+            <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+            &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+          </button>
+          &nbsp;&nbsp;
+
+          <button type="button" class="btn btn-outline-dark btn-sm" (click)="CancelSave()">
+            <span class="fas fa-undo"> &nbsp;&nbsp;</span> {{'Cancel' | translate}}&nbsp;&nbsp;</button>
+          &nbsp;&nbsp;
+
+          <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-danger btn-sm" *ngIf="obserCustomer.obIcustomer.customerId>0"
+            (click)="DeleteCurrentRecord(obserCustomer.obIcustomer.customerId)">
+            <span class="fas fa-trash-alt">&nbsp;&nbsp;</span>{{'Delete' | translate}} &nbsp;&nbsp;</button>
+
+        </div>
+      </div>
+      <br>
+    </div>
+  </form>
+</ng-template>
+<div class="container ">
+<ng-template [ngIf]="enterymode==0">
+  <div class="form-row my-3 container">
+    <!-- start Add New Record -->
+    <div class="form-group col-md-3">
+      <button [hidden]="!_IPrgPer.insert" type="button" id="btnoption" class="btn btn-success" (click)="PostRecordArea()">
+        <i class="fas fa-plus"></i>
+        {{'AddNewRecord' | translate }}
+      </button>
+    </div>
+    <!-- End Add New Record -->
+    <!--start Update -->
+    <div class="form-group col-md-3">
+      <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-info btn-default" (click)="PutRecordArea()">
+        <i class="fas fa-edit"></i>
+        {{'Update' | translate }}
+      </button>
+    </div>
+    <!--End Update -->
+    <!--start Export To Excel -->
+    <div class="form-group col-md-3">
+      <button [hidden]="!_IPrgPer.excel"type="button" id="btnoption" class="btn btn-dark btn-default" (click)="ExportExcel()" *ngIf=this.Admin>
+        <i class="fa fa-arrow-down"></i>
+        {{'Export To Excel' | translate }}
+      </button>
+    </div>
+    <!--End Export To Excel -->
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-3" *ngIf=this.Admin>
+      <label [style.float]="Rtl? 'right':'left'" for="salesRepId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Sales Representative' | translate}}</span> </label>
+      <select #salesRepId="ngModel" class="custom-select custom-select-sm"
+        [(ngModel)]="obserCustomer.obIcustomer.salesRepId" name="salesRepId" id="salesRepId"
+        (ngModelChange)="onChangeSelectionCustomerBySalesID($event)">
+        <option *ngFor="let xsector of AllSales" value={{xsector.salesRepId}}>
+          {{xsector.salesRepLatName}}
+
+        </option>
+      </select>
+    </div>
+  </div>
+  <hr>
+    <ag-grid-angular #agGrid style="width: 100%; height: 550px;" class="ag-theme-alpine mb-5" [rowData]="rowData | async"
+      [columnDefs]="columnDefs" [animateRows]="true" [paginationPageSize]="100" [rowBuffer]="100"
+      (rowDoubleClicked)="onrowDoubleClicked($event)" [rowSelection]="rowSelection"
+      (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)" pagination>
+    </ag-grid-angular>
+    
+  </ng-template>
+</div>
+
+<router-outlet></router-outlet>

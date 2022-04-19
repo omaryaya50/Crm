@@ -1,0 +1,653 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container mb-3">
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Code' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Create A Question' | translate }}
+    </a>
+  </div>
+</div>
+
+
+
+<div class="container">
+  <div class="row " *ngIf="!AddNewQuestion">
+
+    <!-- Start buttons -->
+    <div class="col-md-3 col-sm">
+      <button [hidden]="!_IPrgPer.insert" type="button" id="btnoption" class="btn btn-success btn-sm" (click)="Addnewversion(template)">
+        <i class="fas fa-plus"></i> {{'Add New Version' | translate }}
+      </button>
+    </div>
+
+    <div class="col-md-3 col-sm">
+      <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-info btn-sm" (click)="UpdateVersion(template)">
+        <i class="fas fa-edit"></i> {{'Update Version' | translate }}
+      </button>
+    </div>
+
+    <div class="col-md-3 col-sm">
+      <button [hidden]="!_IPrgPer.insert" type="button" id="btnoption" class="btn btn-info btn-sm" (click)="AddQuestion(template)">
+        <i class="fas fa-plus"></i> {{'Add Question' | translate }}
+      </button>
+    </div>
+
+    <!-- End buttons -->
+    <!-- start question Name -->
+    <div class="col-md-6 my-3">
+      <label [style.float]="Rtl? 'right':'left'" for="questionCode"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Questions' | translate}}</span> </label>
+      <select #questionCode="ngModel" class="custom-select custom-select-sm" [(ngModel)]="QuestionServ.Question"
+        name="questionCode" id="questionCode" (ngModelChange)="onChangeSelectionSelectedQuestion($event)" required>
+
+        <option *ngFor="let xcustClass of VersionQuestionElemnts" value={{xcustClass.questionCode}}>
+          {{xcustClass.questionName}}
+        </option>
+      </select>
+    </div>
+    <!-- End question Name -->
+  </div>
+</div>
+<div class="row" *ngIf="AddNewQuestion">
+  <div class="form-group col-md-6">
+    <label [style.float]="Rtl? 'right':'left'" for="versionActulCode"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        {{'Version Code' | translate}}</span> </label>
+
+    <input #versionActulCode="ngModel" type="text" name="versionActulCode"
+      [(ngModel)]="VersionServ.Version.versionActulCode" class="form-control input-sm" id="versionActulCode"
+      placeholder="{{'Version Code' | translate}}" required readonly>
+  </div>
+  <div class="form-group col-md-6">
+    <label [style.float]="Rtl? 'right':'left'" for="versionName"><span [style.float]="Rtl? 'right':'left'"
+        class="badge badge-pill badge-light">
+        {{'Version Name' | translate}}</span> </label>
+
+    <input #versionName="ngModel" type="text" name="versionName" [(ngModel)]="VersionServ.Version.versionName"
+      class="form-control input-sm" id="versionName" placeholder="{{'Version Name' | translate}}" required readonly>
+  </div>
+</div>
+<div class="container">
+  <hr>
+
+</div>
+
+<div class="form-row" *ngIf="AddNewQuestion">
+
+  <form #Question="ngForm" (ngSubmit)="onSubmitQuestionAnswer(Question)">
+
+    <fieldset [dir]="Rtl? 'right':'left'">
+      <legend><button type="button" class="btn btn-info" (click)="ShowQuestionContent()">
+          {{'Question' | translate}}
+          <span class="fas fa-angle-double-down">&nbsp;&nbsp;</span>
+        </button>
+      </legend>
+    </fieldset>
+
+    <div *ngIf="QuestionContent">
+      <div class="form-row" style="margin-top: 10px;">
+        <div>
+          <label style="font-size: x-large;" [style.float]="Rtl? 'right':'left'" for="actualQuestionCode"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'Question Code' | translate}}</span> </label>
+        </div>
+        <div class="col-md-3">
+          <input #actualQuestionCode="ngModel" type="text" name="actualQuestionCode"
+            [(ngModel)]="QuestionServ.Question.actualQuestionCode" class="form-control input-sm" id="actualQuestionCode"
+            placeholder="{{'actualQuestionCode' | translate}}" required readonly>
+        </div>
+        <br>
+        <br>
+      </div>
+
+      <div class="form-row" style="margin-top:10px;">
+        <div class="form-group ">
+          <label style="font-size: x-large; margin-right: 20px;" [style.float]="Rtl? 'right':'left'"
+            for="Required"><span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'1-Is This Question Required ?' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+
+          <label [ngStyle]="{'background-color':(RequiredFlage==1)? 'green' : 'red'}"
+            style="font-size: x-large; margin-right: 20px" (click)="YesRequired()" [style.float]="Rtl? 'right':'left'"
+            name="Required"><span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'YES!' | translate}}</span> </label>
+
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(RequiredFlage==0)? 'green' : 'red'}" style="font-size: x-large;"
+            (click)="NotRequired()" [style.float]="Rtl? 'right':'left'" name="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'NO!' | translate}}</span> </label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group ">
+          <label style="font-size: x-large; margin-right: 20px" [style.float]="Rtl? 'right':'left'" for="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'2-Is This Question Depends On Background Information ?' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(BackGroundinfo==1)? 'green' : 'red'}"
+            style="font-size: x-large; margin-right: 20px" (click)="YesProgram()" [style.float]="Rtl? 'right':'left'"
+            name="Required"><span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'YES!' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(BackGroundinfo==0)? 'green' : 'red'}" style="font-size: x-large;"
+            (click)="NoProgram()" [style.float]="Rtl? 'right':'left'" name="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'NO!' | translate}}</span> </label>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6" style="margin-left: 20px;" *ngIf="ProgramsList">
+        <label style="font-size: large;" [style.float]="Rtl? 'right':'left'" for="progId"><span
+            [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+            {{'I-Choose a Background Information' | translate}}</span> </label>
+        <select #progId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="QuestionServ.Question.progId"
+          name="progId" id="progId" (ngModelChange)="onChangeSelectionPrograms($event)">
+          <option *ngFor="let xsector of Programs" value={{xsector.progId}}>
+            {{xsector.arabicName}}
+          </option>
+        </select>
+
+        <!-- <ng-multiselect-dropdown name="program" placeholder="{{'Programs' | translate}}"
+                    (onSelect)="onItemSelect4($event)" [settings]="dropdownSettings2" [data]="Programs"
+                    [(ngModel)]="SelectedProgramsList">
+                </ng-multiselect-dropdown> -->
+      </div>
+
+      <div class="form-row">
+        <div class="form-group ">
+          <label style="font-size: x-large; margin-right: 20px" [style.float]="Rtl? 'right':'left'" for="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'3-Is This Question Depends On Previous Question ?' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(PrevQuestion==1)? 'green' : 'red'}"
+            style="font-size: x-large; margin-right: 20px" (click)="YesAnotherQuestion()"
+            [style.float]="Rtl? 'right':'left'" name="Required"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'YES!' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(PrevQuestion==0)? 'green' : 'red'}" style="font-size: x-large;"
+            (click)="NoAnotherQuestion()" [style.float]="Rtl? 'right':'left'" name="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'NO!' | translate}}</span> </label>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="margin-left: 20px;" *ngIf="QuestionList">
+        <div class="form-group ">
+          <label style="font-size: large; " [style.float]="Rtl? 'right':'left'" for="questionCode"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'I-Previous Questions' | translate}}</span> </label>
+          <select #questionCode="ngModel" class="custom-select custom-select-sm"
+            [(ngModel)]="QuestionServ.Question.dependsOnQuestionCode" name="questionCode" id="questionCode"
+            (ngModelChange)="onChangeSelectionQuestion($event)">
+            <option *ngFor="let xsector of VersionQuestionElemnts" value={{xsector.questionCode}}>
+              {{xsector.questionName}}
+            </option>
+          </select>
+        </div>
+
+        <div *ngIf="SpecificAnswer" class="form-group">
+          <label style="font-size: large; margin-right: 20px" [style.float]="Rtl? 'right':'left'" for="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'II-Depends On A Sepcific Answer ?' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(PrevAnswer==1)? 'green' : 'red'}"
+            style="font-size: x-large; margin-right: 20px" (click)="YesSpecificAnswer()"
+            [style.float]="Rtl? 'right':'left'" name="Required"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'YES!' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(PrevAnswer==0)? 'green' : 'red'}" style="font-size: x-large;"
+            (click)="NoSpecificAnswer()" [style.float]="Rtl? 'right':'left'" name="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'NO!' | translate}}</span> </label>
+        </div>
+
+        <div style=" font-size: large; margin-left: 40px; margin-bottom: 5px;" *ngIf="AnswerList">
+          <label [style.float]="Rtl? 'right':'left'" for="answerCode"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'III-Previous Answers' | translate}}</span> </label>
+          <select #answerCode="ngModel" class="custom-select custom-select-sm"
+            [(ngModel)]="QuestionServ.Question.answerCode" name="answerCode" id="answerCode"
+            (ngModelChange)="onChangeSelectionAnswer($event)">
+            <option *ngFor="let xsector of dependsOnQuestionCodeAnswers" value={{xsector.answerChoiseCode}}>
+              {{xsector.answerChoiseName}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group ">
+          <label style="font-size: x-large; margin-right: 20px" [style.float]="Rtl? 'right':'left'" for="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'4-Would You Like To Activate a Note At Question Level ?' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(QuesNotes==1)? 'green' : 'red'}"
+            style="font-size: x-large; margin-right: 20px" (click)="YesQuestionNotes()"
+            [style.float]="Rtl? 'right':'left'" name="Required"><span [style.float]="Rtl? 'right':'left'"
+              class="badge badge-pill badge-light">
+              {{'YES!' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(QuesNotes==0)? 'green' : 'red'}" style="font-size: x-large;"
+            (click)="NoQuestionNotes()" [style.float]="Rtl? 'right':'left'" name="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'NO!' | translate}}</span> </label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group ">
+          <label style="font-size: x-large; margin-right: 20px" [style.float]="Rtl? 'right':'left'" for="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'5-Activate Adding Attachments ?' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(Attachment==1)? 'green' : 'red'}"
+            style="font-size: x-large; margin-right: 20px" (click)="YesAttachment()" [style.float]="Rtl? 'right':'left'"
+            name="Required"><span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'YES!' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(Attachment==0)? 'green' : 'red'}" style="font-size: x-large;"
+            (click)="NoAttachment()" [style.float]="Rtl? 'right':'left'" name="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'NO!' | translate}}</span> </label>
+        </div>
+      </div>
+
+
+      <div class="form-row" *ngIf="!VisitSummaryExists || SummaryID==QuestionServ.Question.questionCode">
+        <div class="form-group ">
+          <label style="font-size: x-large; margin-right: 20px" [style.float]="Rtl? 'right':'left'" for="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'6-Visit Summary ?' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(Summary==1)? 'green' : 'red'}"
+            style="font-size: x-large; margin-right: 20px" (click)="YesSummary()" [style.float]="Rtl? 'right':'left'"
+            name="Required"><span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'YES!' | translate}}</span> </label>
+
+          &nbsp;&nbsp;
+          <label [ngStyle]="{'background-color':(Summary==0)? 'green' : 'red'}" style="font-size: x-large;"
+            (click)="NoSummary()" [style.float]="Rtl? 'right':'left'" name="Required"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'NO!' | translate}}</span> </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6 ">
+          <label style="font-size: x-large;" [style.float]="Rtl? 'right':'left'" for="questionLatName"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'Enter Question English Description' | translate}}</span> </label>
+
+          <input #questionLatName="ngModel" type="text" name="questionLatName"
+            [(ngModel)]="QuestionServ.Question.questionLatName" class="form-control input-sm"
+            id="{{'LatName' | translate}}" placeholder="questionLatName" required>
+
+
+        </div>
+        <div class="form-group col-md-6 ">
+          <label style="font-size: x-large;" [style.float]="Rtl? 'right':'left'" for="questionName"><span
+              [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+              {{'Enter Question Arabic Description' | translate}}</span> </label>
+
+          <input #questionName="ngModel" type="text" name="questionName"
+            [(ngModel)]="QuestionServ.Question.questionName" class="form-control input-sm" id="questionName"
+            placeholder="{{'Name' | translate}}" required>
+
+        </div>
+      </div>
+
+    </div>
+
+    <fieldset [dir]="Rtl? 'right':'left'">
+      <legend><button type="button" class="btn btn-info" (click)="ShowAnswerTypes()">
+          {{'Choose Answer Type' | translate}}
+          <span class="fas fa-angle-double-down">&nbsp;&nbsp;</span>
+        </button>
+      </legend>
+    </fieldset>
+
+    <div *ngIf="AnswersTypesContent">
+
+      <label [style.float]="Rtl? 'right':'left'" for="answerTypeCode"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Types' | translate}}</span> </label>
+      <select #answerTypeCode="ngModel" class="custom-select custom-select-sm" [(ngModel)]="AnswerServ.Answer.typeCode"
+        name="answerTypeCode" id="answerTypeCode" (ngModelChange)="onChangeSelectionAnswerType($event)">
+        <option *ngFor="let xsector of AnswerTypes" value={{xsector.answerTypeCode}}>
+          {{xsector.answerTypeName | translate}}
+        </option>
+      </select>
+
+      <div style="margin-left: 40px; margin-top: 20px;" class=" form-group col-md-6" *ngIf="RateFlag">
+
+        <label [style.float]="Rtl? 'right':'left'" for="Code"><span [style.float]="Rtl? 'right':'left'"
+            class="badge badge-pill badge-light">
+            {{'Choose The Rate Way' | translate}}</span> </label>
+        <select #Code="ngModel" class="custom-select custom-select-sm" [(ngModel)]="RateType" name="Code" id="Code"
+          (ngModelChange)="onItemChangeRateType($event)">
+          <option *ngFor="let xsector of RateTypesList" value={{xsector.Code}}>
+            {{xsector.Name| translate}}
+          </option>
+        </select>
+
+      </div>
+
+      <div *ngIf="NumbersFlag">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label [style.float]="Rtl? 'right':'left'" for="from"><span [style.float]="Rtl? 'right':'left'"
+                class="badge badge-pill badge-light">
+                {{'From' | translate}}</span> </label>
+            <input #from="ngModel" type="number" name="from" [(ngModel)]="AnswerServ.Answer.from"
+              class="form-control input-sm" id="from" placeholder="from" required>
+            <div class="text-danger" *ngIf="isSubmitted && from.invalid && from.errors?.required ">
+              <small>{{'required' | translate}}</small>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label [style.float]="Rtl? 'right':'left'" for="to"><span [style.float]="Rtl? 'right':'left'"
+                class="badge badge-pill badge-light">
+                {{'To' | translate}}</span> </label>
+            <input #to="ngModel" type="number" name="to" [(ngModel)]="AnswerServ.Answer.to"
+              class="form-control input-sm" id="to" placeholder="to" required>
+            <div class="text-danger" *ngIf="isSubmitted && to.invalid && to.errors?.required ">
+              <small>{{'required' | translate}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style=" margin-top: 20px;" *ngIf="ChooseFlage">
+        <form #AnswerChoises="ngForm" (ngSubmit)="onSubmitAnswerChoises(AnswerChoises)">
+
+          <div class="form-row">
+            <div class="form-group ">
+              <label style="font-size: x-large; margin-right: 20px" [style.float]="Rtl? 'right':'left'"
+                for="Required"><span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                  {{'Have The Ability To Choose Multiple Choises?' | translate}}</span> </label>
+
+              &nbsp;&nbsp;
+              <label [ngStyle]="{'background-color':(Multiple==1)? 'green' : 'red'}"
+                style="font-size: x-large; margin-right: 20px" (click)="YesMultiple()"
+                [style.float]="Rtl? 'right':'left'" name="Required"><span [style.float]="Rtl? 'right':'left'"
+                  class="badge badge-pill badge-light">
+                  {{'YES!' | translate}}</span> </label>
+
+              &nbsp;&nbsp;
+              <label [ngStyle]="{'background-color':(Multiple==0)? 'green' : 'red'}" style="font-size: x-large;"
+                (click)="NoMultiple()" [style.float]="Rtl? 'right':'left'" name="Required"><span
+                  [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                  {{'NO!' | translate}}</span> </label>
+            </div>
+          </div>
+
+          <fieldset [dir]="Rtl? 'right':'left'">
+            <legend><button [hidden]="!_IPrgPer.insert" type="button" class="btn btn-info" (click)="ShowAnswerContent()">
+                {{'Add Answer' | translate}}
+                <span class="fas fa-angle-double-down">&nbsp;&nbsp;</span>
+              </button>
+            </legend>
+          </fieldset>
+
+          <div *ngIf="AnswerContent">
+
+            <div class="row">
+              <div class="form-group col-md-6 ">
+                <label style="font-size: x-large;" [style.float]="Rtl? 'right':'left'" for="answerChoiseLatName"><span
+                    [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'Enter Answer English Description' | translate}}</span> </label>
+
+                <input #answerChoiseLatName="ngModel" type="text" name="answerChoiseLatName"
+                  [(ngModel)]="AnswerChoiseContentItem.answerChoiseLatName" class="form-control input-sm"
+                  id="answerChoiseLatName" placeholder="{{'LatName' | translate}}" required>
+              </div>
+              <div class="form-group col-md-6 ">
+                <label style="font-size: x-large;" [style.float]="Rtl? 'right':'left'" for="answerChoiseName"><span
+                    [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'Enter Answer Arabic Description' | translate}}</span> </label>
+
+                <input #answerChoiseName="ngModel" type="text" name="answerChoiseName"
+                  [(ngModel)]="AnswerChoiseContentItem.answerChoiseName" class="form-control input-sm"
+                  id="answerChoiseName" placeholder="{{'Name' | translate}}" required>
+
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group ">
+                <label style="font-size: x-large; margin-right: 20px" [style.float]="Rtl? 'right':'left'"
+                  for="Required"><span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'Would You Like To Activate a Note At Answer Level ?' | translate}}</span>
+                </label>
+
+                &nbsp;&nbsp;
+                <label [ngStyle]="{'background-color':(AnswerNote==1)? 'green' : 'red'}"
+                  style="font-size: x-large; margin-right: 20px" (click)="YesAnswerNotes()"
+                  [style.float]="Rtl? 'right':'left'" name="Required"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'YES!' | translate}}</span> </label>
+
+                &nbsp;&nbsp;
+                <label [ngStyle]="{'background-color':(AnswerNote==0)? 'green' : 'red'}" style="font-size: x-large;"
+                  (click)="NoAnswerNotes()" [style.float]="Rtl? 'right':'left'" name="Required"><span
+                    [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'NO!' | translate}}</span> </label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label [style.float]="Rtl? 'right':'left'" for="Code"><span [style.float]="Rtl? 'right':'left'"
+                  class="badge badge-pill badge-light">
+                  {{'Your Choises' | translate}}</span> </label>
+              <select #Code="ngModel" class="custom-select custom-select-sm" [(ngModel)]="AnswerChoiseContentItem"
+                name="Code" id="Code" (ngModelChange)="onItemChangeAnswerChoiseContentList($event)">
+                <option *ngFor="let xsector of AnswerChoiseContentList;let i = index" value={{i}}>
+                  {{xsector.answerChoiseName}}
+                </option>
+              </select>
+            </div>
+
+          </div>
+
+          <div *ngIf="!VersionServ.Version.asked" class="form-row" style="margin-bottom: 50px; margin-top: 20px;">
+            <div class="col text-center">
+              <button [hidden]="!_IPrgPer.insert" style="background-color: forestgreen;" class="btn btn-success btn-sm" data-style="zoom-in">
+                <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save and Add' | translate}}
+                &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+              </button>
+            </div>
+
+            <div class="col text-center" *ngIf="UpdateSelectedAnswerChoise">
+              <button [hidden]="!_IPrgPer.edit" style="background-color: royalblue;" class="btn btn-success btn-sm" data-style="zoom-in">
+                <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Update and Add' | translate}}
+                &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+              </button>
+            </div>
+
+            <div class="col text-center" *ngIf="UpdateSelectedAnswerChoise">
+              <button [hidden]="!_IPrgPer.delete" style="background-color:red;" class="btn btn-success btn-sm" data-style="zoom-in"
+                (click)="DeleteAnswerChoise()">
+                <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Delete' | translate}}
+                &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+              </button>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div class="form-row" style="margin-top: 20px; margin-left:250px;">
+      <div *ngIf="!VersionServ.Version.asked">
+        <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-lg" data-style="zoom-in">
+          <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+          &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+        </button>
+        &nbsp;&nbsp;
+
+        &nbsp;&nbsp;
+        <button [hidden]="!_IPrgPer.delete" *ngIf="DeleteQuestionAnswer" type="button" class="btn btn-lg" style="background-color: red;"
+          (click)="DeleteQuestionAnwser()">
+          <span class="fas fa-save"> &nbsp;&nbsp;</span> {{'Delete' | translate}}&nbsp;&nbsp;</button>
+        &nbsp;&nbsp; &nbsp;&nbsp;
+      </div>
+      <div>
+
+        <button type="button" class="btn btn-outline-dark btn-lg" (click)="CancelSave()">
+          <span class="fas fa-undo"> &nbsp;&nbsp;</span> {{'Cancel' | translate}}&nbsp;&nbsp;</button>
+
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+
+
+<ng-template #template>
+  <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 [dir]="Rtl==true?'RTL':'LTR'" class="modal-title" id="exampleModalLongTitle">
+            {{title | translate}}</h6>
+          <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #Version="ngForm" (ngSubmit)="onSubmit(Version)">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="versionName"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'Name' | translate}}</span> </label>
+                <input #versionName="ngModel" type="text" name="versionName"
+                  [(ngModel)]="VersionServ.Version.versionName" class="form-control input-sm" id="versionName"
+                  placeholder="{{'Name' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && versionName.invalid && versionName.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label [style.float]="Rtl? 'right':'left'" for="versionLatName"><span
+                    [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+                    {{'LatName' | translate}}</span> </label>
+                <input #versionLatName="ngModel" type="text" name="versionLatName"
+                  [(ngModel)]="VersionServ.Version.versionLatName" class="form-control input-sm" id="versionLatName"
+                  placeholder="{{'Name' | translate}}" required>
+                <div class="text-danger"
+                  *ngIf="isSubmitted && versionLatName.invalid && versionLatName.errors?.required ">
+                  <small>{{'required' | translate}}</small>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="form-row">
+
+              <div class="form-group col-md-6">
+                <div class="form-row " style="margin-left: 10px;">
+                  <div>
+                    <input #defult="ngModel" type="checkbox" name="defult" [(ngModel)]="VersionServ.Version.defult"
+                      id="defult">
+
+                  </div>
+
+                  <div>
+                    <label [style.float]="Rtl? 'right':'left'" for="defult"><span [style.float]="Rtl? 'right':'left'"
+                        class="badge badge-pill badge-light">
+                        {{'Is Defult ?' | translate}}</span> </label>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <div class="form-row" style="margin-left: 10px;">
+                  <div>
+                    <input #notActive="ngModel" type="checkbox" name="notActive"
+                      [(ngModel)]="VersionServ.Version.notActive" id="notActive">
+
+                  </div>
+
+                  <div>
+                    <label [style.float]="Rtl? 'right':'left'" for="notActive"><span [style.float]="Rtl? 'right':'left'"
+                        class="badge badge-pill badge-light">
+                        {{'Not Active ?' | translate}}</span> </label>
+                  </div>
+
+                </div>
+              </div>
+
+
+
+
+
+            </div>
+
+
+            <div class="form-row" style="margin-left: 80px;">
+              <div>
+                <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+                  <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                </button>
+
+                &nbsp;&nbsp;
+
+
+              </div>
+              <div *ngIf="!VersionServ.Version.asked">
+                <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-danger btn-sm" *ngIf="VersionServ.Version.versionCode>0 "
+                  (click)="DeleteVersion(VersionServ.Version.versionCode)">
+                  <span class="fas fa-trash-alt">&nbsp;&nbsp;</span>{{'Delete' | translate}}
+                  &nbsp;&nbsp;</button> &nbsp;&nbsp;
+                <button type="button" class="btn btn-dark btn-sm" (click)="resetVersion()">
+                  <span class="fas fa-undo"> &nbsp;&nbsp;</span>
+                  {{'Reset' | translate}}&nbsp;&nbsp;</button>
+
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="container">
+<div class="" *ngIf="!AddNewQuestion">
+  <ag-grid-angular #agGrid style="width: 100%; height: 250px;" class="ag-theme-alpine" [rowData]="rowData | async"
+    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+    [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"
+    pagination>
+  </ag-grid-angular>
+</div>
+</div>

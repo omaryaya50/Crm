@@ -1,0 +1,165 @@
+<ngx-spinner></ngx-spinner>
+<div class="container">
+  <div class="form-row" class="tool">
+
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Reports' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Total Visits Report' | translate }}
+    </a>
+  </div>
+</div>
+
+
+
+<br>
+
+<div class="container">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label [style.float]="Rtl? 'right':'left'" for="salesRepId">
+        <span [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+          {{'Sales Representative' | translate}}</span>
+      </label>
+      <select #salesRepId="ngModel" class="custom-select" [(ngModel)]="SalesID" name="salesRepId" id="salesRepId"
+        (ngModelChange)="onChangeSelectionCustomerBySalesID($event)">
+        <option value="0">
+
+        </option>
+        <option *ngFor="let xsector of AllSales" value={{xsector.salesRepId}}>
+          {{xsector.salesRepName}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label [style.float]="Rtl? 'right':'left'" for="customerId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Customer' | translate}}</span> </label>
+      <select #customerId="ngModel" class="custom-select" [(ngModel)]="CustomerID" name="customerId" id="customerId"
+        (ngModelChange)="onChangeSelectionByCustomer($event)">
+        <option *ngFor="let xsector of AllCustomers" value={{xsector.customerId}}>
+          {{xsector.customerName}}
+
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label [style.float]="Rtl? 'right':'left'" for="fromDate"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'From Date' | translate}}</span> </label>
+
+      <input #fromDate="ngModel" type="date" name="fromDate" [(ngModel)]="FromDate" class="form-control input-sm"
+        id="fromDate">
+    </div>
+
+    <div class="form-group col-md-4">
+      <label [style.float]="Rtl? 'right':'left'" for="toDate"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'To Date' | translate}}</span> </label>
+
+      <input #toDate="ngModel" type="date" name="toDate" [(ngModel)]="ToDate" class="form-control input-sm" id="toDate">
+    </div>
+    <div class="form-group col-md-4">
+      <label [style.float]="Rtl? 'right':'left'" for="ReportName"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Report Name' | translate}}</span> </label>
+      <input type="text" [(ngModel)]="ReportName" class="form-control input-sm"
+        placeholder="{{'Report Name' | translate}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="territoryId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Territory' | translate}}</span> </label>
+      <select #territoryId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Tid" name="territoryId"
+        id="territoryId" (ngModelChange)="onChangeSelectionT($event)">
+        <option selected></option>
+
+        <option *ngFor="let xsector of Territory" value={{xsector.territoryId}}>
+          {{xsector.territoryName}}
+
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label [style.float]="Rtl? 'right':'left'" for="sectorId"><span [style.float]="Rtl? 'right':'left'"
+          class="badge badge-pill badge-light">
+          {{'Sector' | translate}}</span> </label>
+      <select #sectorId="ngModel" class="custom-select custom-select-sm" [(ngModel)]="Sid" name="sectorId"
+        id="sectorId" (ngModelChange)="onChangeSelectionS($event)">
+        <option selected></option>
+
+        <option *ngFor="let xsector of Sector" value={{xsector.sectorId}}>
+          {{xsector.sectorName}}
+
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+        class="btn btn-outline-info" (click)="Filter()">
+        <i class="fa fa-eye" aria-hidden="true"></i> {{'Show Data' | translate }}
+      </button>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption"
+        class="btn btn-outline-success" (click)="ExportExcel(FilteredList)">
+        <i class="fa fa-arrow-down"></i>
+        {{'Export To Excel' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <hr>
+  </div>
+</div>
+
+
+<div class="container mb-5">
+
+  <div class="form-row">
+    <ag-grid-angular #agGrid style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="rowData | async"
+      [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" animateRows [rowSelection]="rowSelection"
+      (gridReady)="onGridReady($event)"  pagination>
+    </ag-grid-angular>
+  </div>
+
+
+  <div class="form-row" *ngIf="showSecondGrid">
+    <div class="form-group col-md-6">
+      <fieldset [dir]="Rtl? 'right':'left'">
+        <legend>{{'Details' | translate}}</legend>
+      </fieldset>
+    </div>
+
+    <div class="form-group col-md-3">
+      <button style="background-color: rgb(red, green, blue) ;" type="button" id="btnoption" class="btn btn-default"
+        (click)="ExportExcel(VisitDetails)">
+
+        <i class="fa fa-arrow-down"></i>
+        {{'Export Details To Excel' | translate }}
+
+      </button>
+    </div>
+  </div>
+
+  <div class="form-row" *ngIf="showSecondGrid">
+    <ag-grid-angular #agGrid2 style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="rowData2 | async"
+      [columnDefs]="columnDefs2" [defaultColDef]="defaultColDef" animateRows [rowSelection]="rowSelection"
+      (gridReady)="onGridReady2($event)" pagination>
+    </ag-grid-angular>
+  </div>
+</div>

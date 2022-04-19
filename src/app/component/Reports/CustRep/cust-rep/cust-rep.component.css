@@ -1,0 +1,7 @@
+.form-row{
+    align-items: flex-end;
+}
+li{
+    display: block;
+    margin: 20px;
+}

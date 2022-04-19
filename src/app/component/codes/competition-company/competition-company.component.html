@@ -1,0 +1,110 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="container mb-3">
+  <div class="form-row" class="tool">
+    <a [style.float]="Rtl? 'right':'left'" routerLink="" class="btn btn-light btn-sm">&nbsp;<span
+        class="fas fa-home">&nbsp;&nbsp; </span> {{'Home' | translate }} / </a>
+    <span [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm"> {{'Code' | translate }}/</span>
+    <a [style.float]="Rtl? 'right':'left'" class="btn btn-light btn-sm">
+      <span class="fas fa-sync fa-spin"></span> {{'Competition Companies' | translate }}
+    </a>
+  </div>
+</div>
+
+<div class="container">
+  <button [hidden]="!_IPrgPer.insert" type="button" id="btnoption" class="btn btn-success btn-sm" (click)="Addnewrecord(template)">
+    <i class="fas fa-plus"></i>
+    {{'AddNewRecord' | translate }}
+  </button>
+  <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-info btn-sm mx-3" (click)="UpdateRecord(template)">
+    <i class="fas fa-edit"></i>
+    {{'Update' | translate }}
+  </button>
+</div>
+<div class="container mx-4">
+  <hr>
+</div>
+
+<div class="form-row">
+  <ng-template #template>
+
+    <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="exampleModalLongTitle">{{title | translate}}</h6>
+            <button type="button" class="close" (click)="hide()" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #CompetitionCompany="ngForm" (ngSubmit)="onSubmit(CompetitionCompany)">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label [style.float]="Rtl? 'right':'left'" for="competitionCompanyName"><span
+                      [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+
+                      {{'Name' | translate}} </span></label>
+                  <input #competitionCompanyName="ngModel" type="text" name="competitionCompanyName"
+                    [(ngModel)]="obCompetitionCompany.obCompetitionCompany.competitionCompanyName"
+                    class="form-control input-sm" id="competitionCompanyName" placeholder="{{'Name' | translate}}"
+                    required>
+                  <div class="text-danger"
+                    *ngIf="isSubmitted && competitionCompanyName.invalid && competitionCompanyName.errors?.required ">
+                    <small>{{'required' | translate}}</small>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label [style.float]="Rtl? 'right':'left'" for="competitionCompanyLatName"><span
+                      [style.float]="Rtl? 'right':'left'" class="badge badge-pill badge-light">
+
+                      {{'LatName' | translate}} </span></label>
+                  <input #competitionCompanyLatName="ngModel" type="text" class="form-control input-sm"
+                    name="competitionCompanyLatName" id="competitionCompanyLatName"
+                    [(ngModel)]="obCompetitionCompany.obCompetitionCompany.competitionCompanyLatName"
+                    placeholder="{{'LatName' | translate}}" required>
+                  <div class="text-danger"
+                    *ngIf="isSubmitted && competitionCompanyLatName.invalid && competitionCompanyLatName.errors?.required ">
+                    <small>{{'required' | translate}}</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col text-center">
+                  <button [hidden]="!_IPrgPer.insert" class="btn btn-success btn-sm" data-style="zoom-in">
+                    <span class="fas fa-save"></span>&nbsp;&nbsp;{{'Save' | translate}}
+                    &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>
+                  &nbsp;&nbsp;
+                  <button type="button" class="btn btn-dark btn-sm" (click)="reset()">
+                    <span class="fas fa-undo"> &nbsp;&nbsp;</span> {{'Reset' | translate}}&nbsp;&nbsp;</button>
+                  &nbsp;&nbsp;
+
+                  <button [hidden]="!_IPrgPer.delete" type="button" class="btn btn-danger btn-sm"
+                    *ngIf="obCompetitionCompany.obCompetitionCompany.competitionCompanyId>0"
+                    (click)="Delete(obCompetitionCompany.obCompetitionCompany.competitionCompanyId)">
+                    <span class="fas fa-trash-alt">&nbsp;&nbsp;</span>{{'Delete' | translate}} &nbsp;&nbsp;</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+</div>
+
+
+
+<div class="container">
+  <ag-grid-angular #agGrid style="width: 100%; height: 450px;" class="ag-theme-alpine" [rowData]="rowData | async"
+    [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableRtl]="Rtl" animateRows
+    [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)"
+    pagination>
+  </ag-grid-angular>
+</div>

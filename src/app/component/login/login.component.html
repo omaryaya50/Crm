@@ -1,0 +1,113 @@
+<section class="login--section">
+
+  <div class="container-fluid ">
+    <div class="border-0">
+      <div class="">
+        <form #user="ngForm" class="login--form" (ngSubmit)="onLogin(user)" autocomplete="off">
+          <div class="card border-0 px-4 pb-5">
+            <div class="login--head text-center">
+
+              <div class="logo text-center mt-3">
+                <img src="assets/images/amal--logo.png " class="img-fluid" alt=" user account ">
+              </div>
+
+              <div class="mb-4 ">
+                <h2 class="">{{'Login' | translate }}</h2>
+              </div>
+            </div>
+
+            <div class="row px-3">
+              <label class="mb-1" [style.float]="Rtl? 'right':'left'">
+                <h6 class="mb-0  login--lable text-sm">{{'Email Address' | translate }}</h6>
+              </label>
+
+              <input class="mb-4" #userName="ngModel" type="email" id="userName" name="email"
+                [(ngModel)]="this.obuser.loginUse.userName" placeholder="Enter a valid email address" required>
+              <div class="text-danger" *ngIf="isSubmitted &&user.invalid && user.errors?.required ">
+                <small>required</small>
+              </div>
+            </div>
+            <div class="row px-3">
+              <label class="mb-1" [style.float]="Rtl? 'right':'left'">
+                <h6 class="mb-0 login--lable text-sm"> {{'Password' | translate }}</h6>
+              </label>
+              <input [style.float]="Rtl? 'right':'left'" [type]="hide ? 'password' : 'text'" #password="ngModel"
+                [(ngModel)]="obuser.loginUse.password" id="password" name="password" placeholder="Enter password">
+              <span (click)=" myFunction()" toggle="#password-field"
+                class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
+            </div>
+            <div class="row px-3 mb-4">
+
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input id="chk1" type="checkbox" name="chk" class="custom-control-input mb-4">
+                <label [style.float]="Rtl? 'right':'left'" for="chk1" class="custom-control-label text-sm">
+                  {{'Remember me' | translate }}</label>
+              </div>
+              <a [style.float]="Rtl? 'right':'left'" (click)="showModel(template)" class="ml-auto mb-0 text-sm">
+                {{'Forgot Password?' | translate }}</a>
+
+            </div>
+            <div class="text-danger mb-3" *ngIf="!isSubmitted">
+              <small> {{'Invalid login please try again' | translate }} </small>
+            </div>
+            <div class="mb-3 text-center">
+              <button type="submit" class="btn btn-primary login--btn btn-lg ">{{'Login' | translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #template>
+  <div class="modal" id="myModal" role="dialog" [dir]="Rtl==true?'RTL':'LTR'" [style.display]=" 'block'">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle">Reset Password</h6>
+          <button type="button" class="close" (click)="hidee()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #setUp="ngForm">
+            <div class="form-row">
+              <div class="col text-center">
+                <label [style.float]="Rtl? 'right':'left'" for="mail"><span [style.float]="Rtl? 'right':'left'"
+                    class="badge badge-pill badge-light">
+                    {{'Email' | translate}}</span> </label>
+
+                <input #mail="ngModel" type="email" name="mail" [(ngModel)]="ToMail" class="form-control input-sm"
+                  id="mail" placeholder="{{'Email' | translate}}" required>
+                <div class="text-danger" *ngIf="isSubmitted && mail.invalid && mail.errors?.required ">
+
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col text-center">
+
+                &nbsp;&nbsp;
+                <button type="button" class="btn btn-dark btn-sm" (click)="resetPassword()">
+                  <span class="fas fa-undo"> &nbsp;&nbsp;</span>
+                  {{'Reset' | translate}}&nbsp;&nbsp;</button>
+                &nbsp;&nbsp;
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalLabel" aria-hidden="true">
+                </div>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>
