@@ -63,19 +63,19 @@ const routes: Routes = [
   {path: 'Codes/Agent', component: AgentComponent, canActivate:[LoginActivate], data: {ProgId: '100900000'}},
   {path: 'Codes/CreateQuestion', component: CreateQuestionComponent, canActivate:[LoginActivate], data: {ProgId: '100110000'}},
   {path: 'Admin/Users', component: UsersComponent},
-  {path: 'Customers/Customer', component: CustomerComponent , data: {ProgId: '200100000'}},
+  {path: 'Customers/Customer', component: CustomerComponent ,canActivate:[LoginActivate], data: {ProgId: '200100000'}},
   {path: 'Admin/Groups', component: GroupsComponent, canActivate:[LoginActivate]},
   {path: 'Admin/GeneralSetUp', component: GeneralSetUpComponent, canActivate:[LoginActivate]},
   {path: 'Codes/Distributor', component: DistributorComponent, canActivate:[LoginActivate], data: {ProgId: '100101000'}},
   {path: 'Reports/CustRep', component: CustRepComponent, canActivate:[LoginActivate]},
   {path: 'Reports/CustClassRep', component: CustClassRepComponent, canActivate:[LoginActivate]},
-  
+
   {path: 'Reports/CustSalesFieldRep', component: CustSalesFieldRepComponent, canActivate:[LoginActivate]},
-  
+
   {path: 'Reports/CustNoteTypeRep', component: CustNoteTypeRepComponent, canActivate:[LoginActivate]},
-  
+
   {path: 'Reports/CustPGRep', component: CustProcuctGRepComponent, canActivate:[LoginActivate]},
-  
+
   {path: 'Reports/totalVisitsRep', component: TotalVisitsRepComponent, },
   {path: 'Reports/VisitSchedual', component: VisitsSchedualsComponent },
 
@@ -84,7 +84,7 @@ const routes: Routes = [
   {path: 'Codes/TechnicalMarketingDepartment', component: TechnicalMarketingDepartmentComponent, data: {ProgId: '103040000'}},
 
 
-  
+
   {path: 'Reports/EvalRep', component: EvalRepComponent, canActivate:[LoginActivate], data: {ProgId: '103040000'}},
   {path: 'Customers/ChangeRepForCustomer', component: ChangeRepComponent, canActivate:[LoginActivate]},
   {path: 'Reports/compition', component: ComptionComponent, canActivate:[LoginActivate]},

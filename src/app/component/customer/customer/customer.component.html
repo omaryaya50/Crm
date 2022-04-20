@@ -354,14 +354,14 @@
     <hr>
     <div class="form-row">
 
-      <div>   
-        <button  type="button" class="btn btn-outline-success btn-sm" (click)="insertFooterRow(template)">
+      <div>
+        <button [hidden]="!_IPrgPer.insert" type="button" class="btn btn-outline-success btn-sm" (click)="insertFooterRow(template)">
           {{'AddnewRow' | translate}}</button>
-        <button  type="button" id="btnoption" class="btn btn-outline-info btn-sm" (click)="UpdateFooterRow(template)">
+        <button [hidden]="!_IPrgPer.edit" type="button" id="btnoption" class="btn btn-outline-info btn-sm" (click)="UpdateFooterRow(template)">
           <i class="fas fa-edit"></i><small> {{'Updaterow' | translate }}</small>
 
         </button>&nbsp;&nbsp;
-        <button  type="button" class="btn btn-outline-danger btn-sm" (click)="deleteSelectedRows()">
+        <button [hidden]="!_IPrgPer.delete"  type="button" class="btn btn-outline-danger btn-sm" (click)="deleteSelectedRows()">
           <small> {{'deleteRow' | translate}}</small>
         </button>
         <br>
@@ -700,7 +700,7 @@
       (rowDoubleClicked)="onrowDoubleClicked($event)" [rowSelection]="rowSelection"
       (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)" pagination>
     </ag-grid-angular>
-    
+
   </ng-template>
 </div>
 

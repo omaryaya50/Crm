@@ -197,6 +197,13 @@ export class CustomerComponent implements OnInit {
       sysId:0,
       userId:0
     }
+    this.route.data.subscribe(data => {
+      this. _GroupPermissionService.GetProgpermissionperuser(data.ProgId, localStorage.getItem("id")).subscribe(x=>
+       {
+         this._IPrgPer=x;
+       })
+
+     });
     this.Setgrid();
     this.rowData = this.obserCustomer.GetAlldata();
 
